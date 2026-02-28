@@ -42,15 +42,30 @@
             color: #111827;
             font-weight: 600;
         }
+        
+        /* Custom list style for deeper nesting */
+        .nested-list {
+            list-style-type: none;
+            padding-left: 1.25rem;
+            position: relative;
+        }
+        .nested-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #94a3b8;
+        }
+        /* Flashing Red Border Utility */
+        @keyframes flashBorderRed {
+            0%, 100% { border-color: #fca5a5; box-shadow: 0 0 5px rgba(239, 68, 68, 0.1); }
+            50% { border-color: #ef4444; box-shadow: 0 0 20px rgba(239, 68, 68, 0.6); }
+        }
+        .flash-red-border {
+            border-width: 2px;
+            animation: flashBorderRed 1.5s infinite ease-in-out;
+        }
     </style>
     <!-- Chosen Palette: Warm Neutrals & Professional Blue -->
-    <!-- Application Structure Plan: The app transforms the static SOW into an interactive "Project Portal".
-         1. "Executive View" Hero: Sets the context.
-         2. "Data Architecture Explorer": Transforms the "Syncs" text into an interactive flow diagram.
-         3. "Infrastructure Decision Engine": Modified to 2 options (Client-Owned vs Mason-Managed). 
-         4. "Dashboard Simulator": Core value prop with Chart.js previews.
-         5. "Project Launchpad": Comprehensive Next Steps and Phase-by-Phase implementation plan.
-         CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </head>
 <body class="bg-stone-50 text-stone-800 font-sans antialiased selection:bg-blue-100">
 
@@ -66,80 +81,204 @@
             </div>
             <div class="text-right hidden sm:block">
                 <p class="text-xs text-stone-500">Prepared for Jacob Stankich</p>
+                <p class="text-xs text-stone-500">Prepared by Mason D.G.</p>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24">
 
         <!-- Introduction Section -->
-        <section class="max-w-4xl mx-auto text-center space-y-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-stone-900">Aspire & Quickbooks → SQL Server</h2>
-            <h4 class="text-xl md:text-xl font-bold text-stone-900">+  MS PowerBI Dashbaords</h4>
+        <section class="max-w-4xl mx-auto text-center space-y-6">
+            <div class="space-y-2">
+                <h2 class="text-3xl md:text-5xl font-bold text-stone-900 tracking-tight">Scope Of Work</h2>
+                <h3 class="text-xl md:text-2xl font-medium text-orange-600 italic">Aspire & QuickBooks → SQL → PowerBI</h3>
+            </div>
             <p class="text-lg text-stone-600 leading-relaxed">
-                This project centralizes your operational data from <strong>Aspire</strong> and financial data from <strong>QuickBooks</strong> into a dedicated <strong>SQL Server</strong>. 
-                This infrastructure will power a suite of <strong>PowerBI dashboards<strong>, giving you real-time visibility into pipeline health, operational efficiency, and financial performance.
+                Centralizing operational data from <strong>Aspire</strong> and financial data from <strong>QuickBooks</strong> into a dedicated <strong>SQL Server</strong>. 
+                This infrastructure will power a suite of <strong>PowerBI dashboards</strong>, providing real-time visibility into pipeline health, operational efficiency, and financial performance.
             </p>
+        </section>
+
+        <!-- Next Steps & Roadmap -->
+        <section id="next-steps" class="space-y-12">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <p class="text-stone-600">Checklist and technical phases required for kickoff.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div class="bg-white p-10 rounded-2xl flash-red-border shadow-sm flex flex-col">
+                    <h4 class="text-xl font-bold text-stone-900 mb-8 flex items-center gap-3">
+                        <span class="bg-blue-600 text-white w-8 h-8 rounded-lg flex items-center justify-center font-serif text-lg italic shadow-md shadow-blue-100">i</span>
+                        Pre-Development Steps
+                    </h4>
+                    
+                    <div class="space-y-4">
+                        <div class="p-6 bg-amber-50 rounded-xl border border-amber-100 border-l-4 border-l-amber-400 mb-4">
+                            <p class="text-sm text-amber-900 font-bold flex items-center gap-2 mb-2">
+                                &#9888; Action Required
+                            </p>
+                            <p class="text-xs text-amber-800 leading-relaxed">
+                                A SOW signature is neededed before resources can be provisioned.
+                            </p>
+                        </div>
+
+                        <div class="space-y-2">
+                            <div onclick="document.getElementById('investment').scrollIntoView({behavior: 'smooth'})" class="flex items-center gap-4 p-3 -mx-3 rounded-xl cursor-pointer hover:bg-stone-50 hover:shadow-sm border border-transparent hover:border-stone-200 transition-all group">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full border-2 border-red-500 flex items-center justify-center text-[10px] font-bold text-red-600 bg-red-50 group-hover:bg-red-500 group-hover:text-white transition-colors">1</span>
+                                <div class="flex-grow">
+                                    <p class="text-sm font-bold text-stone-900 group-hover:text-blue-600 transition-colors">Select Packages</p>
+                                    <p class="text-xs text-stone-500 mt-1">Choose your SQL Infrastructure and Implementation tiers below.</p>
+                                </div>
+                                <span class="text-stone-300 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all text-xl">&#8595;</span>
+                            </div>
+                            
+                            <a href="https://app.mindcloud.co" target="_blank" class="flex items-center gap-4 p-3 -mx-3 rounded-xl cursor-pointer hover:bg-stone-50 hover:shadow-sm border border-transparent hover:border-stone-200 transition-all group block">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full border-2 border-red-500 flex items-center justify-center text-[10px] font-bold text-red-600 bg-red-50 group-hover:bg-red-500 group-hover:text-white transition-colors">2</span>
+                                <div class="flex-grow">
+                                    <p class="text-sm font-bold text-stone-900 group-hover:text-blue-600 transition-colors flex items-center gap-1.5">
+                                        Setup Integration Org
+                                        <svg class="w-3 h-3 text-stone-400 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                    </p>
+                                    <p class="text-xs text-stone-500 mt-1">Create account (jacob@fisklawnscapes.com) and invite **m.d.galyon21@gmail.com** as a Member.</p>
+                                </div>
+                                <span class="text-stone-300 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all text-xl">&#8594;</span>
+                            </a>
+                            
+                            <a href="https://app.mindcloud.co/credentials" target="_blank" class="flex items-center gap-4 p-3 -mx-3 rounded-xl cursor-pointer hover:bg-stone-50 hover:shadow-sm border border-transparent hover:border-stone-200 transition-all group block">
+                                <span class="flex-shrink-0 w-6 h-6 rounded-full border-2 border-red-500 flex items-center justify-center text-[10px] font-bold text-red-600 bg-red-50 group-hover:bg-red-500 group-hover:text-white transition-colors">3</span>
+                                <div class="flex-grow">
+                                    <p class="text-sm font-bold text-stone-900 group-hover:text-blue-600 transition-colors flex items-center gap-1.5">
+                                        Authenticate Apps
+                                        <svg class="w-3 h-3 text-stone-400 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                    </p>
+                                    <p class="text-xs text-stone-500 mt-1 mb-2">Navigate to "Credentials" and login to each app:</p>
+                                    <ul class="nested-list text-xs text-stone-500 space-y-1">
+                                        <li>Aspire</li>
+                                        <li>QuickBooks - Online & Time</li>
+                                    </ul>
+                                </div>
+                                <span class="text-stone-300 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all text-xl">&#8595;</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-stone-900 text-white p-10 rounded-2xl shadow-2xl flex flex-col">
+                    <h4 class="text-xl font-bold text-white mb-4">Development Roadmap</h4>
+                    <p class="text-[10px] text-orange-400 font-bold uppercase tracking-[0.2em] mb-8">Project Phases</p>
+                    
+                    <div class="space-y-10 relative pl-4 border-l border-stone-800">
+                        <div class="relative pl-8">
+                            <div class="absolute -left-[21px] top-1.5 h-3 w-3 rounded-full bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.5)]"></div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-[10px] text-orange-400 font-bold uppercase tracking-wider">Phase 1</span>
+                                <span class="h-px w-8 bg-stone-700"></span>
+                            </div>
+                            <h5 class="font-bold text-white text-base">SQL Infrastructure</h5>
+                            <p class="text-xs text-stone-400 mt-2 leading-relaxed">
+                                Provisioning server resources and configuring DB table schemas based on confirmed field requirements.
+                            </p>
+                        </div>
+
+                        <div class="relative pl-8">
+                            <div class="absolute -left-[21px] top-1.5 h-3 w-3 rounded-full bg-stone-700"></div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-[10px] text-stone-500 font-bold uppercase tracking-wider">Phase 2</span>
+                                <span class="h-px w-8 bg-stone-800"></span>
+                            </div>
+                            <h5 class="font-bold text-white text-base">Integration Bridge</h5>
+                            <p class="text-xs text-stone-400 mt-2 leading-relaxed">
+                                Finalizing API connectivity and establishing the secure bridge between Source Systems and SQL.
+                            </p>
+                        </div>
+
+                        <div class="relative pl-8">
+                            <div class="absolute -left-[21px] top-1.5 h-3 w-3 rounded-full bg-stone-700"></div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-[10px] text-stone-500 font-bold uppercase tracking-wider">Phase 3</span>
+                                <span class="h-px w-8 bg-stone-800"></span>
+                            </div>
+                            <h5 class="font-bold text-white text-base">Data Sync Validation</h5>
+                            <p class="text-xs text-stone-400 mt-2 leading-relaxed">
+                                Execution of initial sync cycles and validation of data integrity across Aspire/QB mappings.
+                            </p>
+                        </div>
+
+                        <div class="relative pl-8">
+                            <div class="absolute -left-[21px] top-1.5 h-3 w-3 rounded-full bg-stone-700"></div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-[10px] text-stone-500 font-bold uppercase tracking-wider">Phase 4</span>
+                                <span class="h-px w-8 bg-stone-800"></span>
+                            </div>
+                            <h5 class="font-bold text-white text-base">PowerBI Development</h5>
+                            <p class="text-xs text-stone-300 mt-2 leading-relaxed">
+                                Design and deployment of the visualization suite.
+                                <span class="block mt-2 text-stone-500 italic">*Includes Logic Samples & AI-driven dashboard ideas.</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Section 1: Data Architecture Explorer -->
         <section id="architecture" class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
-            <div class="p-8 border-b border-stone-100">
-                <h3 class="text-2xl font-bold text-stone-900 mb-2">1. Technical Data Integration</h3>
-                <p class="text-stone-600">Explore the data flow below. Click on the <strong>Source Systems</strong> to view the specific sync requirements.</p>
+            <div class="p-10 border-b border-stone-100">
+                <h3 class="text-2xl font-bold text-stone-900 mb-2">Integration Workflows</h3>
+                <p class="text-stone-600">View the specific sync requirements and entities for each data pipeline.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-0">
-                <div class="lg:col-span-5 bg-stone-50 p-8 flex flex-col justify-center space-y-6 relative">
-                    <div class="absolute left-8 top-12 bottom-12 w-0.5 bg-stone-300 hidden lg:block"></div>
+                <div class="lg:col-span-5 bg-stone-50 p-10 flex flex-col justify-center space-y-6 relative">
+                    <div class="absolute left-10 top-16 bottom-16 w-0.5 bg-stone-300 hidden lg:block"></div>
                     
-                    <button onclick="showDataDetails('aspire')" class="interactive-card relative z-10 w-full bg-white p-5 rounded-xl border-l-4 border-green-500 shadow-sm text-left transition-all group focus:outline-none focus:ring-2 focus:ring-green-500">
-                        <div class="flex justify-between items-center">
+                    <button onclick="showDataDetails('aspire')" class="interactive-card relative z-10 w-full bg-white p-6 rounded-xl border-l-4 border-green-500 shadow-sm text-left transition-all group focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <div class="flex justify-between items-center mb-1">
                             <span class="font-bold text-stone-900">Aspire (Operations)</span>
-                            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">OData API</span>
+                            <span class="text-[10px] bg-green-100 text-green-800 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">OData API</span>
                         </div>
-                        <p class="text-sm text-stone-500 mt-1">Opportunities, Properties, Tickets</p>
+                        <p class="text-sm text-stone-500">Opportunities, Properties, Work Tickets</p>
                     </button>
 
-                    <button onclick="showDataDetails('qb')" class="interactive-card relative z-10 w-full bg-white p-5 rounded-xl border-l-4 border-blue-500 shadow-sm text-left transition-all group focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <div class="flex justify-between items-center">
+                    <button onclick="showDataDetails('qb')" class="interactive-card relative z-10 w-full bg-white p-6 rounded-xl border-l-4 border-blue-500 shadow-sm text-left transition-all group focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <div class="flex justify-between items-center mb-1">
                             <span class="font-bold text-stone-900">QuickBooks (Finance)</span>
-                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">OAuth</span>
+                            <span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">OAuth 2.0</span>
                         </div>
-                        <p class="text-sm text-stone-500 mt-1">Accounts, GL, Journals</p>
+                        <p class="text-sm text-stone-500">Accounts, GL Transactions, Journals</p>
                     </button>
                     
-                    <div class="flex justify-center py-2">
-                        <span class="text-2xl text-stone-300">&#8595;</span>
+                    <div class="flex justify-center py-4 text-stone-300">
+                        <span class="text-3xl">&#8595;</span>
                     </div>
 
-                    <div class="w-full bg-stone-800 p-5 rounded-xl border border-stone-700 shadow-sm text-center text-white">
-                        <div class="font-bold">SQL Server</div>
-                        <div class="text-xs text-stone-400 mt-1">Centralized Data Warehouse</div>
+                    <div class="w-full bg-stone-900 p-6 rounded-xl border border-stone-800 shadow-lg text-center text-white">
+                        <div class="font-bold text-lg">SQL Server Warehouse</div>
+                        <div class="text-xs text-stone-400 mt-1 uppercase tracking-widest font-medium">Single Source of Truth</div>
                     </div>
                 </div>
 
-                <div class="lg:col-span-7 p-8 bg-white min-h-[400px]">
+                <div class="lg:col-span-7 p-10 bg-white min-h-[450px]">
                     <div id="data-details-content" class="h-full flex flex-col">
                         <div id="data-intro" class="flex-1 flex flex-col items-center justify-center text-center text-stone-400">
-                            <div class="text-4xl mb-4">&#128269;</div>
-                            <p>Select a source system on the left to review sync details.</p>
+                            <div class="text-5xl mb-6 opacity-20">&#128203;</div>
+                            <p class="max-w-xs">Select a source system on the left to review the technical synchronization details.</p>
                         </div>
                         <div id="data-table-container" class="hidden fade-in">
-                            <div class="flex items-center gap-3 mb-6">
+                            <div class="flex items-center gap-3 mb-8">
                                 <h4 id="detail-title" class="text-xl font-bold text-stone-900"></h4>
                                 <span id="detail-badge" class="px-2 py-1 rounded text-xs font-bold"></span>
                             </div>
-                            <div class="overflow-x-auto">
+                            <div class="overflow-x-auto rounded-lg border border-stone-100">
                                 <table class="w-full text-left text-sm">
                                     <thead class="bg-stone-50 text-stone-500 border-b border-stone-200">
                                         <tr>
-                                            <th class="p-3 font-semibold">Entity</th>
-                                            <th class="p-3 font-semibold">Key Data Points</th>
-                                            <th class="p-3 font-semibold">Business Purpose</th>
+                                            <th class="p-4 font-semibold">Entity</th>
+                                            <th class="p-4 font-semibold">Purpose</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="detail-tbody" class="divide-y divide-stone-100"></tbody>
+                                    <tbody id="detail-tbody" class="divide-y divide-stone-100 text-stone-600"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -148,331 +287,280 @@
             </div>
         </section>
 
-        <!-- Section 2: Infrastructure Selection -->
-        <section id="infrastructure" class="space-y-6">
-            <div class="text-center max-w-2xl mx-auto">
-                <h3 class="text-2xl font-bold text-stone-900">2. Infrastructure Provisioning</h3>
-                <p class="text-stone-600 mt-2">We offer two delivery models for the SQL environment. Both utilize Infrastructure as Code (IaC) for stability and transparency.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-                <!-- Option 1: Client Owned -->
-                <div class="bg-white p-8 rounded-2xl border border-stone-200 shadow-sm flex flex-col">
-                    <div class="mb-6 flex justify-between items-start">
-                        <div>
-                            <h4 class="text-xl font-bold text-stone-900">Option 1: Client-Owned Cloud</h4>
-                            <p class="text-sm text-stone-500">We build on your internal accounts.</p>
-                        </div>
-                        <span class="bg-stone-100 text-stone-600 text-xs font-bold px-2 py-1 rounded">Ownership</span>
-                    </div>
-                    
-                    <p class="text-sm text-stone-600 mb-6 flex-grow">
-                        We deploy the entire architecture directly into your existing **GCP or Azure** account. This is ideal if you want full control over the primary billing and infrastructure credentials from day one.
-                    </p>
-
-                    <ul class="text-sm space-y-3 mb-8 text-stone-600">
-                        <li class="flex gap-2 font-medium">
-                            <span class="text-blue-500">&#10003;</span> 
-                            Full hand-off of IaC (Infrastructure as Code) scripts.
-                        </li>
-                        <li class="flex gap-2 font-medium">
-                            <span class="text-blue-500">&#10003;</span> 
-                            Setup, troubleshooting & scaling documentation included.
-                        </li>
-                        <li class="flex gap-2 font-medium">
-                            <span class="text-blue-500">&#10003;</span> 
-                            Direct integration with your existing security policies.
-                        </li>
-                    </ul>
-
-                    <div class="pt-6 border-t border-stone-100 mt-auto">
-                        <p class="text-xs text-stone-400 uppercase tracking-widest font-bold mb-1">Fee Structure</p>
-                        <p class="text-lg font-bold text-stone-900">One-time Implementation Fee</p>
-                    </div>
-                </div>
-
-                <!-- Option 2: Mason Managed (Value-Add) -->
-                <div class="bg-stone-900 text-white p-8 rounded-2xl shadow-xl flex flex-col relative overflow-hidden border border-stone-800">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
-                    
-                    <div class="mb-6 flex justify-between items-start relative z-10">
-                        <div>
-                            <h4 class="text-xl font-bold text-white">Option 2: Mason-Managed</h4>
-                            <p class="text-sm text-stone-400">Build & Host & Manage Solution</p>
-                        </div>
-                        <span class="bg-orange-500 text-stone-900 text-xs font-bold px-2 py-1 rounded">Value-Add</span>
-                    </div>
-                    
-                    <p class="text-sm text-stone-300 mb-6 flex-grow relative z-10">
-                        Our most robust option. All resources are primary-provisioned on **GCP**, but we utilize IaC to provide **Failover Redundancy** across Azure and AWS for an "always-on" experience.
-                    </p>
-
-                    <ul class="text-sm space-y-3 mb-8 text-stone-300 relative z-10">
-                        <li class="flex gap-2 font-medium">
-                            <span class="text-orange-500">&#10003;</span> 
-                            <strong>Multi-Cloud Redundancy:</strong> Automatic provisioning across Azure/AWS if GCP fails.
-                        </li>
-                        <li class="flex gap-2 font-medium">
-                            <span class="text-orange-500">&#10003;</span> 
-                            <strong>Maintenance:</strong> Ongoing PowerBI dashboard maintenance and updates included.
-                        </li>
-                        <li class="flex gap-2 font-medium">
-                            <span class="text-orange-500">&#10003;</span> 
-                            <strong>Monitoring:</strong> Continuous schema monitoring and data sync health checks.
-                        </li>
-                    </ul>
-
-                    <div class="pt-6 border-t border-stone-800 mt-auto relative z-10">
-                        <p class="text-xs text-stone-500 uppercase tracking-widest font-bold mb-1">Fee Structure</p>
-                        <div class="flex items-baseline gap-2">
-                            <p class="text-2xl font-bold text-orange-500">$250</p>
-                            <p class="text-sm text-stone-400">/mo + Resource Usage</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Section 3: Dashboard Preview -->
-        <section id="dashboards" class="space-y-8">
+        <section id="dashboards" class="space-y-10">
             <div class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
-                <div class="p-8 border-b border-stone-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h3 class="text-2xl font-bold text-stone-900">3. PowerBI Dashboard Suite</h3>
-                        <p class="text-stone-600 mt-1">We are delivering 6 high-impact dashboards. Interact below to preview.</p>
+                <div class="p-10 border-b border-stone-100 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div class="space-y-1">
+                        <h3 class="text-2xl font-bold text-stone-900">PowerBI Dashboard Examples</h3>
+                        <p class="text-stone-600">Preview of the primary PowerBI Reporting deliverables.</p>
                     </div>
-                    <div class="flex items-center gap-2">
-                         <span class="text-xs font-bold uppercase text-stone-400">Stakeholders:</span>
-                         <span class="px-2 py-1 bg-stone-100 rounded text-xs text-stone-600">Sales</span>
-                         <span class="px-2 py-1 bg-stone-100 rounded text-xs text-stone-600">Finance</span>
-                         <span class="px-2 py-1 bg-stone-100 rounded text-xs text-stone-600">Ops</span>
+                    <div class="flex items-center gap-3">
+                         <span class="text-[10px] font-bold uppercase text-stone-400 tracking-wider">Targeted Stakeholders:</span>
+                         <span class="px-3 py-1 bg-stone-100 rounded-full text-[10px] font-bold text-stone-600 uppercase">Sales</span>
+                         <span class="px-3 py-1 bg-stone-100 rounded-full text-[10px] font-bold text-stone-600 uppercase">Finance</span>
+                         <span class="px-3 py-1 bg-stone-100 rounded-full text-[10px] font-bold text-stone-600 uppercase">Ops</span>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3">
-                    <div class="bg-stone-50 border-r border-stone-200 p-4 space-y-2">
-                        <button onclick="renderDashboard('sales')" id="btn-sales" class="w-full text-left p-4 rounded-lg hover:bg-white hover:shadow-sm transition-all focus:outline-none border-l-4 border-transparent active-tab">
-                            <div class="font-bold">1. Sales Pipeline</div>
-                            <div class="text-xs text-stone-500">Close rates, lead velocity</div>
+                    <div class="bg-stone-50 border-r border-stone-200 p-6 space-y-2">
+                        <button onclick="renderDashboard('sales')" id="btn-sales" class="w-full text-left p-5 rounded-xl hover:bg-white hover:shadow-sm transition-all focus:outline-none border-l-4 border-transparent active-tab">
+                            <div class="font-bold text-stone-900 text-sm">1. Sales Pipeline</div>
+                            <div class="text-[11px] text-stone-500 mt-0.5">Close rates & lead velocity</div>
                         </button>
-                        <button onclick="renderDashboard('finance')" id="btn-finance" class="w-full text-left p-4 rounded-lg hover:bg-white hover:shadow-sm transition-all focus:outline-none border-l-4 border-transparent text-stone-600">
-                            <div class="font-bold">2. Financial Health</div>
-                            <div class="text-xs text-stone-500">P&L vs Budget</div>
+                        <button onclick="renderDashboard('finance')" id="btn-finance" class="w-full text-left p-5 rounded-xl hover:bg-white hover:shadow-sm transition-all focus:outline-none border-l-4 border-transparent text-stone-600">
+                            <div class="font-bold text-sm">2. Financial Health</div>
+                            <div class="text-[11px] mt-0.5 text-stone-500">P&L vs Budget Comparison</div>
                         </button>
-                        <button onclick="renderDashboard('ops')" id="btn-ops" class="w-full text-left p-4 rounded-lg hover:bg-white hover:shadow-sm transition-all focus:outline-none border-l-4 border-transparent text-stone-600">
-                            <div class="font-bold">3. Operations/Labor</div>
-                            <div class="text-xs text-stone-500">Actual vs Est Efficiency</div>
+                        <button onclick="renderDashboard('ops')" id="btn-ops" class="w-full text-left p-5 rounded-xl hover:bg-white hover:shadow-sm transition-all focus:outline-none border-l-4 border-transparent text-stone-600">
+                            <div class="font-bold text-sm">3. Labor Efficiency</div>
+                            <div class="text-[11px] mt-0.5 text-stone-500">Actual vs Est Ticket Performance</div>
                         </button>
-                        <button onclick="renderDashboard('property')" id="btn-property" class="w-full text-left p-4 rounded-lg hover:bg-white hover:shadow-sm transition-all focus:outline-none border-l-4 border-transparent text-stone-600">
-                            <div class="font-bold">4. Property Analytics</div>
-                            <div class="text-xs text-stone-500">Revenue per property</div>
-                        </button>
-                        <button onclick="renderDashboard('pending1')" id="btn-pending1" class="w-full text-left p-4 rounded-lg hover:bg-white hover:shadow-sm transition-all focus:outline-none border-l-4 border-transparent text-stone-600 opacity-60">
-                            <div class="font-bold">5. [To Be Defined]</div>
-                        </button>
-                        <button onclick="renderDashboard('pending2')" id="btn-pending2" class="w-full text-left p-4 rounded-lg hover:bg-white hover:shadow-sm transition-all focus:outline-none border-l-4 border-transparent text-stone-600 opacity-60">
-                            <div class="font-bold">6. [To Be Defined]</div>
+                        <button onclick="renderDashboard('property')" id="btn-property" class="w-full text-left p-5 rounded-xl hover:bg-white hover:shadow-sm transition-all focus:outline-none border-l-4 border-transparent text-stone-600">
+                            <div class="font-bold text-sm">4. Property Analytics</div>
+                            <div class="text-[11px] mt-0.5 text-stone-500">Revenue per Property metrics</div>
                         </button>
                     </div>
 
-                    <div class="lg:col-span-2 p-8 bg-white flex flex-col items-center justify-center relative min-h-[400px]">
-                         <div class="w-full mb-4">
-                             <h4 id="chart-title" class="text-lg font-bold text-stone-800">Sales Pipeline Health</h4>
-                             <p id="chart-desc" class="text-sm text-stone-500">Visualization of opportunity stages.</p>
+                    <div class="lg:col-span-2 p-10 bg-white flex flex-col items-center justify-center relative min-h-[450px]">
+                         <div class="w-full mb-8">
+                             <h4 id="chart-title" class="text-xl font-bold text-stone-900">Sales Pipeline Health</h4>
+                             <p id="chart-desc" class="text-sm text-stone-500 mt-1 italic">Real-time visualization of opportunity stages from Aspire.</p>
                          </div>
                          <div class="chart-container">
                              <canvas id="dashboardCanvas"></canvas>
                          </div>
-                         <div id="pending-msg" class="hidden absolute inset-0 bg-white/90 flex flex-col items-center justify-center text-center p-8">
-                             <div class="text-4xl mb-4 text-stone-300">&#9997;</div>
-                             <h3 class="text-xl font-bold text-stone-800">Pending Definition</h3>
-                             <p class="text-stone-500">Reserved for your specific KPIs.</p>
-                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 4: Project Launchpad & Phased Execution -->
-        <section id="next-steps" class="space-y-8">
-            <div class="text-center max-w-2xl mx-auto">
-                <h3 class="text-3xl font-bold text-stone-900">4. Project Launchpad</h3>
-                <p class="text-stone-600 mt-2">The path from kickoff to data-driven decision making.</p>
+        <!-- Section 4: Project Scope & Investment -->
+        <section id="investment" class="pt-10 space-y-20 border-t-2 border-dashed border-stone-200">
+            
+            <!-- Deliverables Summary -->
+            <div class="space-y-8">
+                <div class="text-center max-w-2xl mx-auto space-y-2">
+                    <h3 class="text-3xl font-bold text-stone-900">Project Deliverables</h3>
+                    <p class="text-stone-600">The core technical execution required to bring your data to life.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+                        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+                        </div>
+                        <h5 class="font-bold text-stone-900 text-sm mb-2">DB Schema Definition</h5>
+                        <p class="text-xs text-stone-500 leading-relaxed">Designing the relational database structure, tables, and foreign keys tailored to your business operations.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+                        <div class="w-10 h-10 bg-green-50 text-green-600 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                        </div>
+                        <h5 class="font-bold text-stone-900 text-sm mb-2">API Field Mappings</h5>
+                        <p class="text-xs text-stone-500 leading-relaxed">Precise translation and mapping of endpoints from Aspire and QuickBooks into the unified SQL structure.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+                        <div class="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        </div>
+                        <h5 class="font-bold text-stone-900 text-sm mb-2">Workflow Development</h5>
+                        <p class="text-xs text-stone-500 leading-relaxed">Building the automated scripts and scheduled jobs that pull, transform, and push your data reliably.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm">
+                        <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        </div>
+                        <h5 class="font-bold text-stone-900 text-sm mb-2">PowerBI Configuration</h5>
+                        <p class="text-xs text-stone-500 leading-relaxed">Creating DAX measures, data models, and the final interactive dashboards for your executive team.</p>
+                    </div>
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- Pre-Development Checklist -->
-                <div class="bg-white p-8 rounded-2xl border border-stone-200 shadow-sm flex flex-col">
-                    <h4 class="text-xl font-bold text-stone-900 mb-6 flex items-center gap-2">
-                        <span class="text-blue-600 font-serif">!</span> Before We Begin Development
-                    </h4>
+            <!-- Part 1: Infrastructure -->
+            <div class="space-y-8 bg-stone-100 p-8 rounded-3xl">
+                <div class="max-w-2xl mx-auto space-y-2 text-center">
+                    <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Part 1 of 2</span>
+                    <h4 class="text-2xl font-bold text-stone-900">Infrastructure Hosting</h4>
+                    <p class="text-stone-600 text-sm">Choose where your Cloud resources should live.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch max-w-4xl mx-auto">
+                    <div class="bg-white p-8 rounded-2xl border border-stone-200 shadow-sm flex flex-col transition-all hover:border-blue-400">
+                        <div class="mb-4 flex justify-between items-start">
+                            <div>
+                                <h4 class="text-xl font-bold text-stone-900">My Cloud-Hosted Server</h4>
+                                <p class="text-xs text-stone-500 mt-1">Built in your own cloud console.</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-stone-600 mb-4">Maintained directly in your own GCP or Azure account. You maintain 100% control of the root billing and security logs.</p>
+                        
+                        <a href="https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account?icid=azurefreeaccount#freeservices" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors mb-6 group">
+                            Setup Azure & Invite Me
+                            <svg class="w-3 h-3 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </a>
+
+                        <div class="pt-6 border-t border-stone-100 mt-auto">
+                            <p class="text-[10px] text-stone-400 uppercase tracking-widest font-bold mb-1">Monthly Cost</p>
+                            <p class="text-lg font-bold text-stone-900">Billed by Provider</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-stone-900 text-white p-8 rounded-2xl shadow-xl flex flex-col border border-stone-800 transition-all hover:border-orange-500 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full -mr-16 -mt-16 blur-2xl"></div>
+                        <div class="mb-4 flex justify-between items-start relative z-10">
+                            <div>
+                                <h4 class="text-xl font-bold text-white">Managed Hosting</h4>
+                                <p class="text-xs text-stone-400 mt-1">Full-service hosting & failover.</p>
+                            </div>
+                            <span class="bg-orange-500 text-stone-900 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Recommended</span>
+                        </div>
+                        <p class="text-sm text-stone-300 mb-6 relative z-10">Provisioned on GCP with IaC redundancy. If a region encounters an outage, we automatically failover to keep your dashboards live.</p>
+                        <div class="pt-6 border-t border-stone-800 mt-auto relative z-10">
+                            <p class="text-[10px] text-stone-500 uppercase tracking-widest font-bold mb-1">Monthly Cost</p>
+                            <div class="flex items-baseline gap-1">
+                                <p class="text-2xl font-bold text-orange-500">$300</p>
+                                <p class="text-xs text-stone-400 font-medium">/mo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Part 2: Implementation Packages -->
+            <div class="space-y-8">
+                <div class="max-w-2xl mx-auto space-y-2 text-center">
+                    <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Part 2 of 2</span>
+                    <h4 class="text-3xl font-bold text-stone-900">Implementation & Support Packages</h4>
+                    <p class="text-stone-600">Choose the level of execution and ongoing engineering support your team needs to succeed.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch max-w-6xl mx-auto">
                     
-                    <div class="space-y-6">
-                        <div class="p-4 bg-amber-50 rounded-xl border border-amber-100">
-                            <p class="text-sm text-amber-900 font-bold mb-1">Administrative Sign-Off</p>
-                            <p class="text-xs text-amber-800 leading-relaxed">
-                                Formal sign-off on this SOW/Requirements document is required. 
-                                <span class="block mt-2 font-bold italic text-amber-900">*After signing, additional changes will billed at $75/hr. Please review the scope of work carefully.</span>
-                            </p>
+                    <!-- Turnkey Package -->
+                    <div class="bg-white p-10 rounded-3xl border border-stone-200 shadow-sm flex flex-col">
+                        <div class="mb-6">
+                            <h4 class="text-2xl font-bold text-stone-900">Turnkey Deployment</h4>
+                            <p class="text-sm text-stone-500 mt-2">A standard deployment for teams with existing internal technical capacity.</p>
+                        </div>
+                        
+                        <div class="mb-8 pb-8 border-b border-stone-100 flex items-baseline gap-2">
+                            <span class="text-4xl font-bold text-stone-900">$6,997.00</span>
+                            <span class="text-sm text-stone-500 font-medium">One-Time</span>
                         </div>
 
-                        <ul class="space-y-4 text-sm text-stone-700">
-                            <li class="flex items-start gap-3">
-                                <span class="mt-1 h-5 w-5 rounded border border-stone-300 flex items-center justify-center text-[10px] text-blue-600 font-bold">1</span>
-                                <div>
-                                    <p class="font-bold">Select SQL Infrastructure Model</p>
-                                    <p class="text-xs text-stone-500">Choose between:</p>
-                                    <ul class="text-xs text-stone-500 list-disc pl-4 space-y-1">
-                                        <li>Owned: invite me as an admin to your Azure/GCP/AWS account.</li>
-                                        <li>Managed: no action needed - everything taken care of for you. Cloud Logs & Database access will be shared on completion.</li>
-                                    </ul>
-                                </div>
+                        <ul class="text-sm space-y-4 mb-12 text-stone-700 flex-grow">
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span>End-to-end setup of SQL infrastructure & MindCloud workflows.</span>
                             </li>
-                            <li class="flex items-start gap-3">
-                                <span class="mt-1 h-5 w-5 rounded border border-stone-300 flex items-center justify-center text-[10px] text-blue-600 font-bold">2</span>
-                                <div>
-                                    <p class="font-bold">Select Development Model</p>
-                                    <p class="text-xs text-stone-500">Choose Build + Turnover or Build + Managed Maintenance.</p>
-                                </div>
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span>System is turned over to your team post-launch.</span>
                             </li>
-                            <li class="flex items-start gap-3">
-                                <span class="mt-1 h-5 w-5 rounded border border-stone-300 flex items-center justify-center text-[10px] text-blue-600 font-bold">3</span>
-                                <div>
-                                    <p class="font-bold">Setup MindCloud Account</p>
-                                    <p class="text-xs text-stone-500">Create account (Free plan is sufficient until launch). Authenticate Aspire and QuickBooks apps.</p>
-                                    <ul class="text-xs text-stone-500 list-disc pl-4 space-y-1">
-                                    <li>Create account using your jacob@fisklawnscapes.com email</li>
-                                    <li>I created a new Organization for you already: Fisk LawnScapes</li>
-                                    <ul class="text-xs text-stone-500 list-disc pl-4 space-y-1">
-                                        <li>In the top left corner - select the Fisk LawnScapes Org</li>
-                                    </ul>
-                                    <li>Navigate to Settings>Members> "Invite Members": m.d.galyon21@gmail.com</li>
-                                    <li>Click the button that says: "Create Your First Step"</li>
-                                    <li>Find Aspire/Quickbooks from the list of Apps.</li>
-                                    <li>You'll be prompted to Login on Aspire, and that's it!</li>
-                                    </ul>
-                                </div>
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span>Complete technical documentation provided.</span>
                             </li>
-                            <li class="flex items-start gap-3">
-                                <span class="mt-1 h-5 w-5 rounded border border-stone-300 flex items-center justify-center text-[10px] text-blue-600 font-bold">3</span>
-                                <div>
-                                    <p class="font-bold">Access & Authentication</p>
-                                    <p class="text-xs text-stone-500">Login to MindCloud & Authenticate Aspire & QuickBooks apps.</p>
-                                    <ul class="text-xs text-stone-500 list-disc pl-4 space-y-1">
-                                        <li>Navigate to the Workflows page and click "Create Workflow"</li>
-                                        <li>
-                                </div>
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span>Up to five complete PowerBI dashboards</span>
                             </li>
-                            <li class="flex items-start gap-3">
-                                <span class="mt-1 h-5 w-5 rounded border border-stone-300 flex items-center justify-center text-[10px] text-blue-600 font-bold">4</span>
-                                <div>
-                                    <p class="font-bold">Confirm Field Mappings</p>
-                                    <p class="text-xs text-stone-500 mb-2">This won't be so daunting after we define and confrim the SQL table schemas:</p>
-                                    <ul class="text-xs text-stone-500 list-disc pl-4 space-y-1">
-                                        <li>Confirm Aspire to SQL Mappings (Work Tickets, Invoices, Properties, etc.)</li>
-                                        <li>Confirm QuickBooks to SQL Mappings(Accounts, GL Transactions, Journal Entries)</li>
-                                    </ul>
-                                </div>
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span>20-hours on the house for customizations/changes post launch.</span>
                             </li>
-                            <li class="flex items-start gap-3">
-                                <span class="mt-1 h-5 w-5 rounded border border-stone-300 flex items-center justify-center text-[10px] text-blue-600 font-bold">4</span>
-                                <div>
-                                    <p class="font-bold">Finalize Dashboard Specs</p>
-                                    <p class="text-xs text-stone-500">On hold until SQL Schema is Defined and Confirmed.</p>
-                                </div>
+                            <li class="flex gap-3 pt-2 mt-2 border-t border-stone-100">
+                                <svg class="w-5 h-5 text-stone-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span class="text-stone-500 text-xs leading-relaxed"><em>Note: Requires a separate MindCloud Platform License for ongoing data usage (starts at $253/mo or $2,280/yr billed directly by MindCloud).</em></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Fully Managed / Premier Package -->
+                    <div class="bg-stone-900 text-white p-10 rounded-3xl shadow-2xl flex flex-col relative overflow-hidden border border-stone-800 transition-all hover:border-orange-500">
+                        <!-- Premium Glow Effect -->
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
+                        
+                        <div class="mb-6 relative z-10 flex justify-between items-start">
+                            <div>
+                                <h4 class="text-2xl font-bold text-white">Fully Managed Service</h4>
+                                <p class="text-sm text-stone-400 mt-2 pr-4">Your remote IT and Data department.</p>
+                            </div>
+                            <span class="bg-orange-500 text-stone-900 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest flex-shrink-0">Premier</span>
+                        </div>
+                        
+                        <div class="mb-8 pb-8 border-b border-stone-800 relative z-10">
+                            <div class="flex items-baseline gap-2 mb-1">
+                                <span class="text-4xl font-bold text-white">$9,997.00</span>
+                                <span class="text-sm text-orange-400 font-medium">First Year</span>
+                            </div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-xl font-medium text-stone-400">then $6,997</span>
+                                <span class="text-xs text-stone-500 uppercase tracking-widest">/ Year</span>
+                            </div>
+                        </div>
+
+                        <ul class="text-sm space-y-4 mb-8 text-stone-300 relative z-10 flex-grow">
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span><strong>Everything in Turnkey</strong> plus...</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span><strong>PowerBI Bonus:</strong> up to 10 Dashboards</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span><strong>A.I. Hub:</strong> 50M API credits to implement Google Gemini API models in your business.</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span><strong>Direct Support:</strong> Internal Support via Phone, SMS and Email for your entire team.</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <svg class="w-5 h-5 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span><strong>Proactive Maintenance:</strong> API updates, workflow monitoring, system upgrades handled for you automatically.</span>
+                            </li>
+                            <li class="flex gap-3 pt-2 mt-2 border-t border-stone-800">
+                                <svg class="w-5 h-5 text-orange-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span class="text-stone-300"><strong>MindCloud License Included:</strong> up to 20,000 API calls per month.</span>
                             </li>
                         </ul>
                     </div>
                 </div>
-
-                <!-- Phased Implementation Plan -->
-                <div class="bg-stone-900 text-white p-8 rounded-2xl shadow-xl flex flex-col">
-                    <h4 class="text-xl font-bold text-white mb-6">Development Phases</h4>
-                    <p class="text-xs text-orange-500 font-bold uppercase tracking-wider">Sign-Off on Each Phase</p>
-                    <pclass="text-xs text-orange-500 font-bold uppercase tracking-wider">----------------------</p>
-                    <div class="space-y-8">
-                        <div class="p-4 bg-amber-50 rounded-xl border border-amber-100">
-                            <p class="text-sm text-amber-900 font-bold mb-1">SOW Signature Required</p>
-                            <p class="text-xs text-amber-800 leading-relaxed">SOW Signature required at each phase.</p>
-                            <li>Please review these carefully. Once Signed, new requests/features will be billed at $75/hr.</li>
-                    </div>
-                    
-                    <div class="space-y-8 relative pl-4 border-l border-stone-800">
-                        <div class="relative pl-6">
-                            <div class="absolute -left-[21px] top-1.5 h-3 w-3 rounded-full bg-orange-500"></div>
-                            <p class="text-xs text-orange-500 font-bold uppercase tracking-wider">Phase 1</p>
-                            <h5 class="font-bold text-white">SQL Provisioning</h5>
-                            <ul class="text-xs text-stone-400 mt-2 list-disc pl-4 space-y-1">
-                                <li>Provision resources on selected model (Owned/Managed).</li>
-                                <li>Configure SQL Server/DB table structures and data fields.</li>
-                            </ul>
-                        </div>
-
-                        <div class="relative pl-6">
-                            <div class="absolute -left-[21px] top-1.5 h-3 w-3 rounded-full bg-stone-700"></div>
-                            <p class="text-xs text-stone-500 font-bold uppercase tracking-wider">Phase 2</p>
-                            <h5 class="font-bold text-white">MindCloud Access</h5>
-                            <ul class="text-xs text-stone-400 mt-2 list-disc pl-4 space-y-1">
-                                <li>Authentication of Aspire, QuickBooks.</li>
-                                <li>Mason to configure and connect the SQL Server.</li>
-                                <li>Mason to connect the PowerBi App.
-                            </ul>
-                        </div>
-
-                        <div class="relative pl-6">
-                            <div class="absolute -left-[21px] top-1.5 h-3 w-3 rounded-full bg-stone-700"></div>
-                            <p class="text-xs text-stone-500 font-bold uppercase tracking-wider">Phase 3</p>
-                            <h5 class="font-bold text-white">Data Mapping & Sync</h5>
-                            <ul class="text-xs text-stone-400 mt-2 list-disc pl-4 space-y-1">
-                                <li>Confirm field-level mappings from Aspire to SQL.</li>
-                                <li>Confirm field-level mappings from QuickBooks to SQL.</li>
-                            </ul>
-                        </div>
-
-                        <div class="relative pl-6">
-                            <div class="absolute -left-[21px] top-1.5 h-3 w-3 rounded-full bg-stone-700"></div>
-                            <p class="text-xs text-stone-500 font-bold uppercase tracking-wider">Phase 4</p>
-                            <h5 class="font-bold text-white">PowerBI Intelligence Suite</h5>
-                            <p class="text-xs text-stone-300 mt-2">
-                                We will define visualization specifics once SQL tables are live.
-                            </p>
-                            <p class="text-xs text-stone-500 mt-1 italic">
-                                *Mason will provide sample dashboards and better define logic during this phase.
-                            </p>
-                        </div>
-                    </div>
-                </div>
             </div>
+
         </section>
     </main>
 
-    <footer class="bg-white border-t border-stone-200 mt-20 py-10">
+    <footer class="bg-white border-t border-stone-200 mt-32 py-12">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-stone-500 text-sm">Fisk Lawnscapes Project Proposal &bull; Created by Mason Galyon</p>
+            <p class="text-stone-400 text-xs font-medium uppercase tracking-widest">Fisk Lawnscapes Intelligence Proposal &bull; Mason Galyon</p>
         </div>
     </footer>
 
     <script>
         const requirementsData = {
             aspire: {
-                title: "Aspire Data Sync",
-                badge: "OData API",
+                title: "Aspire Core Sync",
+                badge: "OData Integration",
                 color: "text-green-600 bg-green-50",
                 rows: [
-                    { entity: "Opportunities", points: "ID, Value, Rep, Close Date", purpose: "Sales reporting." },
-                    { entity: "Work Tickets", points: "ID, Status, Revenue Class, Service", purpose: "Operational analysis/reporting" },
-                    { entity: "Properties", points: "ID, Addresses, Customer", purpose: "Operational Reporting/Analysis" },
-                    { entity: "Invoices", points: "ID, Date, Balance, Status", purpose: "Financial Reporting" }
+                    { entity: "Opportunities", purpose: "Sales pipeline tracking and forecasting." },
+                    { entity: "Work Tickets", purpose: "Labor efficiency and ticket performance analysis." },
+                    { entity: "Properties", purpose: "Regional client distribution and mapping." },
+                    { entity: "Invoices", purpose: "Revenue recognition and billing health." }
                 ]
             },
             qb: {
-                title: "QuickBooks Data Sync",
-                badge: "OAuth Connection",
+                title: "QuickBooks Finance Sync",
+                badge: "OAuth Secure Connect",
                 color: "text-blue-600 bg-blue-50",
                 rows: [
-                    { entity: "Accounts", points: "Chart of Accounts", purpose: "Financial structure." },
-                    { entity: "Journal Entries", points: "ID, Debits/Credits, Class", purpose: "Audit trails." },
-                    { entity: "GL Transactions", points: "Date, Amount, Memo", purpose: "Expense tracking." }
+                    { entity: "Accounts", purpose: "Master Chart of Accounts structure." },
+                    { entity: "GL Transactions", purpose: "Detailed financial transaction logging." },
+                    { entity: "Journal Entries", purpose: "Manual adjustments and audit compliance." }
                 ]
             }
         };
@@ -489,15 +577,14 @@
             container.classList.remove('hidden');
             title.textContent = content.title;
             badge.textContent = content.badge;
-            badge.className = `px-2 py-1 rounded text-xs font-bold ${content.color}`;
+            badge.className = `px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${content.color}`;
 
             tbody.innerHTML = '';
             content.rows.forEach(row => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td class="p-3 font-medium text-stone-800 border-b">${row.entity}</td>
-                    <td class="p-3 text-stone-600 border-b">${row.points}</td>
-                    <td class="p-3 text-stone-600 italic border-b">${row.purpose}</td>
+                    <td class="p-4 font-bold text-stone-900">${row.entity}</td>
+                    <td class="p-4 text-stone-600 italic">${row.purpose}</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -510,58 +597,54 @@
             const activeBtn = document.getElementById(`btn-${type}`);
             if(activeBtn) activeBtn.classList.add('active-tab', 'border-l-4', 'border-blue-600', 'bg-stone-50');
 
-            const pendingMsg = document.getElementById('pending-msg');
             const canvas = document.getElementById('dashboardCanvas');
             const title = document.getElementById('chart-title');
-
-            if (type.includes('pending')) {
-                pendingMsg.classList.remove('hidden');
-                if(activeChart) activeChart.destroy();
-                return;
-            } else {
-                pendingMsg.classList.add('hidden');
-            }
+            const desc = document.getElementById('chart-desc');
 
             const ctx = canvas.getContext('2d');
             if (activeChart) activeChart.destroy();
 
             if (type === 'sales') {
                 title.textContent = "Sales Pipeline Health";
+                desc.textContent = "Distribution of opportunities by current sales funnel stage.";
                 activeChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
                         labels: ['Lead', 'Qualifying', 'Proposal', 'Negotiation', 'Won'],
-                        datasets: [{ data: [45, 30, 20, 12, 8], backgroundColor: '#3B82F6', borderRadius: 4 }]
+                        datasets: [{ data: [45, 30, 20, 12, 8], backgroundColor: '#3b82f6', borderRadius: 4 }]
                     },
                     options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
                 });
             } else if (type === 'finance') {
-                title.textContent = "Financial Health (P&L)";
+                title.textContent = "Financial Performance (P&L)";
+                desc.textContent = "Monthly revenue trajectory across the current fiscal year.";
                 activeChart = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                        datasets: [{ label: 'Revenue', data: [65, 59, 80, 81, 96, 105], borderColor: '#10B981', tension: 0.3 }]
+                        datasets: [{ label: 'Revenue', data: [65, 59, 80, 81, 96, 105], borderColor: '#10b981', tension: 0.3, fill: false }]
                     },
                     options: { responsive: true, maintainAspectRatio: false }
                 });
             } else if (type === 'ops') {
-                title.textContent = "Operations Efficiency";
+                title.textContent = "Labor Performance";
+                desc.textContent = "Comparing estimated versus actual hours worked by service category.";
                 activeChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
                         labels: ['Mowing', 'Install', 'Irrigation'],
-                        datasets: [{ label: 'Est', data: [120, 300, 80], backgroundColor: '#D1D5DB' }, { label: 'Actual', data: [110, 320, 75], backgroundColor: '#F59E0B' }]
+                        datasets: [{ label: 'Estimated', data: [120, 300, 80], backgroundColor: '#e2e8f0' }, { label: 'Actual', data: [110, 320, 75], backgroundColor: '#f59e0b' }]
                     },
                     options: { responsive: true, maintainAspectRatio: false }
                 });
             } else if (type === 'property') {
-                title.textContent = "Revenue by Area";
+                title.textContent = "Revenue by Territory";
+                desc.textContent = "Breakdown of regional revenue generation for logistics optimization.";
                 activeChart = new Chart(ctx, {
                     type: 'doughnut',
                     data: {
-                        labels: ['North', 'Downtown', 'West', 'Suburbs'],
-                        datasets: [{ data: [35, 25, 20, 20], backgroundColor: ['#1E3A8A', '#3B82F6', '#93C5FD', '#DBEAFE'] }]
+                        labels: ['North Springs', 'Downtown', 'West Side', 'Suburbs'],
+                        datasets: [{ data: [35, 25, 20, 20], backgroundColor: ['#1e3a8a', '#3b82f6', '#93c5fd', '#dbeafe'] }]
                     },
                     options: { responsive: true, maintainAspectRatio: false }
                 });
