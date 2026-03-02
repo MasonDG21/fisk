@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fisk Lawnscapes | Enterprise SQL Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom scrollbar for the table view */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f5f5f4; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
+        
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .active-table-btn {
+            background-color: #fafaf9; /* stone-50 */
+            border-left-width: 4px;
+            font-weight: 700;
+        }
+
+        /* Spreadsheet cell styling matching the 'stone' palette */
+        .ss-cell { border: 1px solid #e7e5e4; padding: 0.75rem 1rem; }
+        .ss-header { background-color: #f5f5f4; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; color: #57534e; }
+    </style>
+    <!-- Chosen Palette: Warm Neutrals (Stone) & High-Impact Orange (Facts/Accents) & Black (Dimensions) -->
+    <!-- Application Structure Plan:
+         This acts as an interactive Schema Designer/Dictionary tailored for the client.
+         1. Header/Intro: Matches the SOW header completely.
+         2. Main Grid: 
+            - Left Sidebar: Grouped navigation (Fact Tables vs Dimension Tables) using Black/Orange indicators.
+            - Right Main: "Spreadsheet" view of the selected table, showing Column, Type, Keys, and descriptions.
+         3. Value Add Sidebar: Explains enterprise concepts using the premium dark-mode aesthetic (stone-900 + orange) used in the SOW.
+    -->
+    <!-- Visualization & Content Choices:
+         - Spreadsheets: HTML Tables dynamically rendered via JS to satisfy user's preference for spreadsheet layouts.
+         - Flow/Relationships: Managed via clear Primary Key (PK) and Foreign Key (FK) badging rather than messy lines, keeping it clean and readable.
+         CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+</head>
+<body class="bg-stone-50 text-stone-800 font-sans antialiased h-screen flex flex-col overflow-hidden selection:bg-orange-100">
+
+    <!-- Top Navigation bar (Matched to SOW Header) -->
+    <header class="w-full bg-white border-b border-stone-200 shrink-0 relative z-20">
+        <div class="px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="h-10 w-10 bg-stone-900 rounded flex items-center justify-center text-white font-bold text-xl">FL</div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-stone-900">SQL Database Overview</h1>
+                    <p class="text-xs text-stone-500 uppercase tracking-wider">Star Schema</p>
+                </div>
+            </div>
+            <div class="text-right hidden sm:block">
+                <p class="text-xs text-stone-500">Prepared for Jacob Stankich</p>
+                <p class="text-xs text-stone-500">Prepared by Mason D.G.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Application Area -->
+    <main class="flex-1 flex overflow-hidden">
+        
+        <!-- LEFT SIDEBAR: Table Navigation -->
+        <aside class="w-72 bg-white border-r border-stone-200 overflow-y-auto shrink-0 flex flex-col shadow-sm relative z-10">
+            <div class="p-5 border-b border-stone-100 bg-stone-50">
+                <h2 class="text-xs font-bold text-stone-500 uppercase tracking-widest mb-1">Architecture View</h2>
+                <p class="text-xs text-stone-600 leading-relaxed">Select a table to view its schema, keys, and relationships in the spreadsheet view.</p>
+            </div>
+
+            <!-- Dimension Tables (Lookup Data) -->
+            <div class="p-4 mt-2">
+                <h3 class="text-[10px] font-bold text-stone-900 uppercase tracking-widest mb-3 flex items-center gap-2 px-2">
+                    <span class="w-2 h-2 rounded-full bg-stone-900"></span>
+                    Dimension Tables (Lookups)
+                </h3>
+                <div class="space-y-1" id="nav-dimensions">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Fact Tables (Transactional Data) -->
+            <div class="p-4 border-t border-stone-100">
+                <h3 class="text-[10px] font-bold text-orange-600 uppercase tracking-widest mb-3 flex items-center gap-2 px-2">
+                    <span class="w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_5px_rgba(249,115,22,0.5)]"></span>
+                    Fact Tables (Transactions)
+                </h3>
+                <div class="space-y-1" id="nav-facts">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- CENTER PANEL: Spreadsheet View -->
+        <section class="flex-1 bg-stone-50 flex flex-col overflow-hidden relative">
+            <!-- Header for current table -->
+            <div class="bg-white px-8 py-6 border-b border-stone-200 shrink-0 shadow-sm flex justify-between items-start z-10">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span id="table-type-badge" class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-stone-100 text-stone-600 border border-stone-200">Type</span>
+                        <h2 id="table-name" class="text-2xl font-bold text-stone-900 font-mono">Select a Table</h2>
+                    </div>
+                    <p id="table-desc" class="text-sm text-stone-500 max-w-2xl">The schema details will appear here.</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-[10px] uppercase font-bold text-stone-400 mb-1">Source Systems</p>
+                    <div id="table-sources" class="flex gap-2 justify-end">
+                        <!-- Badges injected by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spreadsheet Grid -->
+            <div class="flex-1 overflow-auto p-8 bg-stone-50/50 relative">
+                <!-- Decorative background element -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-orange-50 rounded-full blur-3xl opacity-50 -z-10 -mr-20 -mt-20"></div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden fade-in" id="spreadsheet-container">
+                    <table class="w-full text-left text-sm border-collapse">
+                        <thead>
+                            <tr class="bg-stone-50 border-b border-stone-200">
+                                <th class="ss-cell ss-header w-1/4">Column Name</th>
+                                <th class="ss-cell ss-header w-1/6">Data Type</th>
+                                <th class="ss-cell ss-header w-1/12 text-center">Key</th>
+                                <th class="ss-cell ss-header w-1/2">Definition & Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody id="spreadsheet-body" class="divide-y divide-stone-100 text-stone-600">
+                            <!-- Rows injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT SIDEBAR: Enterprise Concepts & Education (Matched to "Mason-Managed" SOW card style) -->
+        <aside class="w-80 bg-stone-900 text-stone-300 overflow-y-auto shrink-0 p-8 flex flex-col border-l border-stone-800 relative">
+            <!-- Decorative Accent -->
+            <div class="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full -mr-16 -mt-16 blur-2xl"></div>
+
+            <h3 class="text-lg font-bold text-white mb-2 relative z-10">Enterprise Strategy</h3>
+            <p class="text-xs text-stone-400 mb-8 leading-relaxed relative z-10">
+                Strategic concepts guiding your SQL development. This architecture ensures PowerBI runs efficiently at scale.
+            </p>
+
+            <div class="space-y-6 relative z-10">
+                <!-- Concept 1 -->
+                <div class="bg-stone-800/50 p-5 rounded-xl border border-stone-700/50 hover:border-orange-500/30 transition-colors">
+                    <h4 class="text-sm font-bold text-white mb-2 flex items-center gap-2">
+                        <span class="text-lg text-orange-500">&#10022;</span> Star Schema
+                    </h4>
+                    <p class="text-xs leading-relaxed text-stone-400">
+                        We separate data into <strong class="text-orange-400">Facts</strong> (numbers, transactions) and <strong class="text-stone-200">Dimensions</strong> (who, what, where). PowerBI reads Star Schemas up to 10x faster than flat tables.
+                    </p>
+                </div>
+
+                <!-- Concept 2 -->
+                <div class="bg-stone-800/50 p-5 rounded-xl border border-stone-700/50 hover:border-orange-500/30 transition-colors">
+                    <h4 class="text-sm font-bold text-white mb-2 flex items-center gap-2">
+                        <span class="text-lg text-orange-500">&#128273;</span> Surrogate Keys
+                    </h4>
+                    <p class="text-xs leading-relaxed text-stone-400">
+                        Instead of using raw Aspire/QB IDs to link tables, we generate our own integer Keys (e.g., <code>CustomerKey</code>). This protects reporting if a source system changes ID formats.
+                    </p>
+                </div>
+
+                <!-- Concept 3 -->
+                <div class="bg-stone-800/50 p-5 rounded-xl border border-stone-700/50 hover:border-orange-500/30 transition-colors">
+                    <h4 class="text-sm font-bold text-white mb-2 flex items-center gap-2">
+                        <span class="text-lg text-orange-500">&#128256;</span> Conformed Dimensions
+                    </h4>
+                    <p class="text-xs leading-relaxed text-stone-400">
+                        Notice <code class="text-stone-300 bg-stone-800 px-1 rounded">dim_Customer</code>? Both Aspire and QB connect to it. Filter a single PowerBI page by "Customer X" and see Operational Pipeline AND Financial Profitability instantly.
+                    </p>
+                </div>
+            </div>
+        </aside>
+
+    </main>
+
+    <script>
+        // Database Schema Definition JSON
+        const dbSchema = {
+            dimensions: [
+                {
+                    id: "dim_date",
+                    name: "dim_Date",
+                    type: "Dimension",
+                    sources: ["System Generated"],
+                    desc: "Master calendar table. Critical for PowerBI Time Intelligence (YTD, MoM, YoY calculations).",
+                    columns: [
+                        { name: "DateKey", type: "INT", key: "PK", def: "YYYYMMDD format (e.g., 20260301). The primary key." },
+                        { name: "FullDate", type: "DATE", key: "", def: "Standard date format." },
+                        { name: "Year", type: "INT", key: "", def: "Calendar Year." },
+                        { name: "MonthName", type: "VARCHAR(20)", key: "", def: "January, February, etc." },
+                        { name: "Quarter", type: "INT", key: "", def: "1, 2, 3, or 4." },
+                        { name: "IsWeekend", type: "BIT", key: "", def: "Boolean flag for weekend tracking." }
+                    ]
+                },
+                {
+                    id: "dim_customer",
+                    name: "dim_Customer",
+                    type: "Dimension",
+                    sources: ["Aspire", "QuickBooks"],
+                    desc: "Conformed dimension representing clients. Merges CRM data from Aspire with billing profiles from QB.",
+                    columns: [
+                        { name: "CustomerKey", type: "INT (Identity)", key: "PK", def: "Surrogate primary key." },
+                        { name: "AspireCustomerID", type: "VARCHAR(50)", key: "", def: "Natural key from Aspire API." },
+                        { name: "QBCustomerID", type: "VARCHAR(50)", key: "", def: "Natural key from QuickBooks OAuth." },
+                        { name: "CustomerName", type: "VARCHAR(255)", key: "", def: "Full name of the client/company." },
+                        { name: "CustomerType", type: "VARCHAR(50)", key: "", def: "e.g., Commercial, Residential, HOA." },
+                        { name: "Status", type: "VARCHAR(20)", key: "", def: "Active, Inactive, Lead." }
+                    ]
+                },
+                {
+                    id: "dim_property",
+                    name: "dim_Property",
+                    type: "Dimension",
+                    sources: ["Aspire"],
+                    desc: "Geographic locations where work is performed. A customer can have multiple properties.",
+                    columns: [
+                        { name: "PropertyKey", type: "INT (Identity)", key: "PK", def: "Surrogate primary key." },
+                        { name: "AspirePropertyID", type: "VARCHAR(50)", key: "", def: "Natural key from Aspire." },
+                        { name: "CustomerKey", type: "INT", key: "FK", def: "Links to dim_Customer." },
+                        { name: "AddressLine1", type: "VARCHAR(255)", key: "", def: "Street address." },
+                        { name: "City", type: "VARCHAR(100)", key: "", def: "Property city." },
+                        { name: "ZipCode", type: "VARCHAR(20)", key: "", def: "Postal code for map visuals." },
+                        { name: "ServiceZone", type: "VARCHAR(50)", key: "", def: "Internal routing or geographic territory." }
+                    ]
+                },
+                {
+                    id: "dim_account",
+                    name: "dim_Account",
+                    type: "Dimension",
+                    sources: ["QuickBooks"],
+                    desc: "The General Ledger Chart of Accounts structure.",
+                    columns: [
+                        { name: "AccountKey", type: "INT (Identity)", key: "PK", def: "Surrogate primary key." },
+                        { name: "QBAccountID", type: "VARCHAR(50)", key: "", def: "Natural key from QuickBooks." },
+                        { name: "AccountNumber", type: "VARCHAR(50)", key: "", def: "GL Number (e.g., 4000, 5000)." },
+                        { name: "AccountName", type: "VARCHAR(255)", key: "", def: "Name of the GL account." },
+                        { name: "AccountType", type: "VARCHAR(50)", key: "", def: "Asset, Liability, Equity, Revenue, Expense." },
+                        { name: "AccountSubType", type: "VARCHAR(100)", key: "", def: "More granular classification for P&L formatting." }
+                    ]
+                }
+            ],
+            facts: [
+                {
+                    id: "fact_opportunity",
+                    name: "fact_Opportunity",
+                    type: "Fact",
+                    sources: ["Aspire"],
+                    desc: "Records sales pipeline events. Allows for point-in-time forecasting and win-rate analysis.",
+                    columns: [
+                        { name: "OpportunityKey", type: "INT (Identity)", key: "PK", def: "Unique row identifier." },
+                        { name: "CustomerKey", type: "INT", key: "FK", def: "Links to dim_Customer." },
+                        { name: "PropertyKey", type: "INT", key: "FK", def: "Links to dim_Property." },
+                        { name: "CreateDateKey", type: "INT", key: "FK", def: "Links to dim_Date. When the opp started." },
+                        { name: "CloseDateKey", type: "INT", key: "FK", def: "Links to dim_Date. When it was won/lost." },
+                        { name: "SalesStage", type: "VARCHAR(50)", key: "", def: "Proposal, Negotiation, Closed Won, etc." },
+                        { name: "ContractValue", type: "DECIMAL(18,2)", key: "", def: "Forecasted or actual signed dollar amount." },
+                        { name: "ProbabilityPct", type: "DECIMAL(5,2)", key: "", def: "Confidence score (0.00 to 1.00) for weighted pipelines." }
+                    ]
+                },
+                {
+                    id: "fact_workticket",
+                    name: "fact_WorkTicket",
+                    type: "Fact",
+                    sources: ["Aspire"],
+                    desc: "The core operational metric table. Tracks estimated vs. actual performance.",
+                    columns: [
+                        { name: "WorkTicketKey", type: "INT (Identity)", key: "PK", def: "Unique row identifier." },
+                        { name: "PropertyKey", type: "INT", key: "FK", def: "Links to dim_Property where work occurred." },
+                        { name: "ServiceDateKey", type: "INT", key: "FK", def: "Links to dim_Date. When work was performed." },
+                        { name: "TicketStatus", type: "VARCHAR(50)", key: "", def: "Scheduled, Completed, Invoiced." },
+                        { name: "ServiceType", type: "VARCHAR(100)", key: "", def: "Mowing, Irrigation, Snow, Enhancement." },
+                        { name: "EstimatedHours", type: "DECIMAL(10,2)", key: "", def: "Budgeted labor time." },
+                        { name: "ActualHours", type: "DECIMAL(10,2)", key: "", def: "Realized labor time punched by crew." },
+                        { name: "EfficiencyVariance", type: "DECIMAL(10,2)", key: "", def: "Calculated: (Estimated - Actual). Positive is good." }
+                    ]
+                },
+                {
+                    id: "fact_gltransaction",
+                    name: "fact_GLTransaction",
+                    type: "Fact",
+                    sources: ["QuickBooks"],
+                    desc: "The atomic level of financial data. Every dollar moving in and out of the business is recorded here to build the P&L.",
+                    columns: [
+                        { name: "TransactionKey", type: "INT (Identity)", key: "PK", def: "Unique row identifier." },
+                        { name: "AccountKey", type: "INT", key: "FK", def: "Links to dim_Account." },
+                        { name: "TransactionDateKey", type: "INT", key: "FK", def: "Links to dim_Date." },
+                        { name: "CustomerKey", type: "INT", key: "FK", def: "Links to dim_Customer (if applicable, e.g., AR)." },
+                        { name: "Amount", type: "DECIMAL(18,2)", key: "", def: "Net value. Positive for debits, negative for credits (standardized)." },
+                        { name: "DocumentNumber", type: "VARCHAR(50)", key: "", def: "Invoice#, Check#, or Journal Entry ID." },
+                        { name: "Memo", type: "VARCHAR(500)", key: "", def: "Line item description for auditing." }
+                    ]
+                }
+            ]
+        };
+
+        // --- UI Rendering Logic ---
+
+        function initNavigation() {
+            const dimNav = document.getElementById('nav-dimensions');
+            const factNav = document.getElementById('nav-facts');
+
+            // Render Dimensions
+            dbSchema.dimensions.forEach(table => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left px-4 py-2.5 rounded-lg text-sm text-stone-600 hover:bg-stone-100 hover:text-stone-900 border-l-4 border-transparent focus:outline-none transition-all nav-btn font-mono my-0.5';
+                btn.textContent = table.name;
+                btn.onclick = () => renderTable(table.id, 'dimension');
+                btn.id = `nav-${table.id}`;
+                dimNav.appendChild(btn);
+            });
+
+            // Render Facts
+            dbSchema.facts.forEach(table => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left px-4 py-2.5 rounded-lg text-sm text-stone-600 hover:bg-stone-100 hover:text-stone-900 border-l-4 border-transparent focus:outline-none transition-all nav-btn font-mono my-0.5';
+                btn.textContent = table.name;
+                btn.onclick = () => renderTable(table.id, 'fact');
+                btn.id = `nav-${table.id}`;
+                factNav.appendChild(btn);
+            });
+
+            // Load first table by default
+            if(dbSchema.facts.length > 0) {
+                renderTable(dbSchema.facts[1].id, 'fact'); // Load WorkTicket as an interesting default
+            }
+        }
+
+        function renderTable(tableId, category) {
+            // Update Active States in Sidebar
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active-table-btn', 'text-stone-900', 'bg-stone-100', 'shadow-sm');
+                btn.classList.add('text-stone-600');
+                btn.style.borderLeftColor = 'transparent';
+            });
+            
+            const activeBtn = document.getElementById(`nav-${tableId}`);
+            if(activeBtn) {
+                activeBtn.classList.add('active-table-btn', 'text-stone-900', 'bg-white', 'shadow-sm');
+                // Black for dimensions, Orange for facts
+                activeBtn.style.borderLeftColor = category === 'dimension' ? '#1c1917' : '#f97316';
+            }
+
+            // Find Table Data
+            const list = category === 'dimension' ? dbSchema.dimensions : dbSchema.facts;
+            const table = list.find(t => t.id === tableId);
+            if (!table) return;
+
+            // Render Header Data
+            document.getElementById('table-name').textContent = table.name;
+            document.getElementById('table-desc').textContent = table.desc;
+            
+            const badge = document.getElementById('table-type-badge');
+            badge.textContent = table.type;
+            if(table.type === 'Dimension') {
+                badge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-stone-900 text-white border border-stone-900 shadow-sm';
+            } else {
+                badge.className = 'px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-orange-100 text-orange-700 border border-orange-200 shadow-sm';
+            }
+
+            const sourcesDiv = document.getElementById('table-sources');
+            sourcesDiv.innerHTML = '';
+            table.sources.forEach(src => {
+                const sBadge = document.createElement('span');
+                sBadge.className = 'px-2 py-1 bg-white border border-stone-200 rounded text-[11px] font-bold text-stone-600 shadow-sm';
+                sBadge.textContent = src;
+                sourcesDiv.appendChild(sBadge);
+            });
+
+            // Render Spreadsheet Rows
+            const tbody = document.getElementById('spreadsheet-body');
+            tbody.innerHTML = ''; // Clear existing
+            
+            // Re-trigger animation
+            const container = document.getElementById('spreadsheet-container');
+            container.classList.remove('fade-in');
+            void container.offsetWidth; // trigger reflow
+            container.classList.add('fade-in');
+
+            table.columns.forEach(col => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-stone-100/50 transition-colors';
+                
+                // Key formatting
+                let keyHTML = '';
+                if(col.key === 'PK') {
+                    keyHTML = '<span class="px-1.5 py-0.5 bg-stone-900 text-white rounded text-[10px] font-bold shadow-sm" title="Primary Key">PK</span>';
+                } else if (col.key === 'FK') {
+                    keyHTML = '<span class="px-1.5 py-0.5 bg-white text-stone-600 rounded text-[10px] font-bold border border-stone-300 shadow-sm" title="Foreign Key">FK</span>';
+                }
+
+                tr.innerHTML = `
+                    <td class="ss-cell font-mono text-stone-900 font-bold">${col.name}</td>
+                    <td class="ss-cell font-mono text-[11px] text-stone-500">${col.type}</td>
+                    <td class="ss-cell text-center">${keyHTML}</td>
+                    <td class="ss-cell text-stone-600 text-[13px] leading-relaxed">${col.def}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', initNavigation);
+
+    </script>
+</body>
+</html>
