@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fisk Lawnscapes | Investment & Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    <!-- Chosen Palette: Warm Neutrals & High-Impact Orange (Matches Portal Branding) -->
+</head>
+<body class="bg-stone-50 text-stone-800 font-sans antialiased selection:bg-orange-100 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="w-full bg-white border-b border-stone-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="flex items-center justify-center w-8 h-8 rounded hover:bg-stone-100 text-stone-400 hover:text-stone-900 transition-colors" title="Back to Portal">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                </a>
+                <a href="index.html">
+                    <div class="h-10 w-10 bg-stone-900 rounded flex items-center justify-center text-white font-bold text-xl shadow-md">FL</div>
+                </a>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-stone-900">Cost & Services</h1>
+                    <p class="text-xs text-stone-500 uppercase tracking-wider">Project Proposal</p>
+                </div>
+            </div>
+            <div class="text-right hidden sm:block">
+                <p class="text-xs text-stone-500">Prepared for Jacob Stankich</p>
+                <p class="text-[10px] text-orange-600 font-bold uppercase tracking-widest mt-0.5">Consultant: Mason D.G.</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24 fade-in w-full">
+
+        <!-- Introduction Section -->
+        <section class="max-w-4xl mx-auto text-center space-y-6">
+            <div class="space-y-2">
+                <h2 class="text-3xl md:text-5xl font-bold text-stone-900 tracking-tight">Project Costs</h2>
+                <h3 class="text-xl md:text-2xl font-medium text-orange-600 italic">Execution, Infrastructure, and Support</h3>
+            </div>
+            <p class="text-lg text-stone-600 leading-relaxed max-w-2xl mx-auto">
+                Review the core deliverables and select the infrastructure and implementation packages that best align with your team's technical capabilities and long-term goals.
+            </p>
+        </section>
+
+        <!-- Deliverables Summary -->
+        <section class="space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <h3 class="text-2xl font-bold text-stone-900">Included Deliverables</h3>
+                <p class="text-stone-600">The core technical execution required to bring your data to life.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+                    </div>
+                    <h5 class="font-bold text-stone-900 text-sm mb-2">DB Schema Definition</h5>
+                    <p class="text-xs text-stone-500 leading-relaxed">Designing the relational database structure, tables, and foreign keys tailored to your business operations.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+                    <div class="w-10 h-10 bg-green-50 text-green-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                    </div>
+                    <h5 class="font-bold text-stone-900 text-sm mb-2">API Field Mappings</h5>
+                    <p class="text-xs text-stone-500 leading-relaxed">Precise translation and mapping of endpoints from Aspire and QuickBooks into the unified SQL structure.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+                    <div class="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </div>
+                    <h5 class="font-bold text-stone-900 text-sm mb-2">Workflow Development</h5>
+                    <p class="text-xs text-stone-500 leading-relaxed">Building the automated scripts and scheduled jobs that pull, transform, and push your data reliably.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+                    <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    </div>
+                    <h5 class="font-bold text-stone-900 text-sm mb-2">PowerBI Configuration</h5>
+                    <p class="text-xs text-stone-500 leading-relaxed">Creating DAX measures, data models, and the final interactive dashboards for your executive team.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part 1: Infrastructure -->
+        <section class="space-y-8 bg-stone-100 p-8 md:p-12 rounded-3xl border border-stone-200">
+            <div class="max-w-2xl mx-auto space-y-2 text-center">
+                <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Part 1 of 2</span>
+                <h4 class="text-3xl font-bold text-stone-900">Infrastructure Hosting</h4>
+                <p class="text-stone-600">Please select <strong class="text-stone-900 underline decoration-orange-500 decoration-2 underline-offset-4">one</strong> of the following environments.</p>
+            </div>
+            
+            <div class="relative max-w-5xl mx-auto">
+                <!-- Visual 'OR' Divider -->
+                <div class="hidden md:flex absolute inset-0 items-center justify-center pointer-events-none z-20">
+                    <div class="w-12 h-12 rounded-full bg-stone-200 border-4 border-stone-100 text-stone-500 text-xs font-black tracking-widest flex items-center justify-center shadow-inner">
+                        OR
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch relative z-10">
+                    <!-- Client Owned -->
+                    <div id="infra-card-1" onclick="selectInfra(1)" class="cursor-pointer bg-white p-8 rounded-2xl border-2 border-stone-200 shadow-sm flex flex-col transition-all duration-300 hover:shadow-md hover:border-blue-400 group">
+                        <div class="mb-4 flex justify-between items-start">
+                            <div class="flex items-start gap-3">
+                                <!-- Radio Indicator -->
+                                <div id="infra-radio-1" class="mt-1 w-5 h-5 rounded-full border-2 border-stone-300 flex items-center justify-center flex-shrink-0 transition-colors">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-transparent transition-colors"></div>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-stone-900 group-hover:text-blue-700 transition-colors">My Cloud-Hosted Server</h4>
+                                    <p class="text-xs text-stone-500 mt-1">Built in your own cloud console.</p>
+                                </div>
+                            </div>
+                            <span class="bg-stone-100 text-stone-600 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider border border-stone-200">Ownership</span>
+                        </div>
+                        
+                        <p class="text-sm text-stone-600 mb-6 leading-relaxed pl-8">Maintained directly in your own GCP or Azure account. You maintain 100% control of the root billing and security logs.</p>
+                        
+                        <div class="pl-8 mb-6">
+                            <a href="https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account?icid=azurefreeaccount#freeservices" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors group/link relative z-20">
+                                Setup Azure & Invite Me
+                                <svg class="w-3 h-3 transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </a>
+                        </div>
+
+                        <div class="pt-6 border-t border-stone-100 mt-auto pl-8">
+                            <p class="text-[10px] text-stone-400 uppercase tracking-widest font-bold mb-1">Monthly Cost</p>
+                            <p class="text-lg font-bold text-stone-900">Billed by Your Cloud Provider</p>
+                        </div>
+                    </div>
+
+                    <!-- Mason Managed -->
+                    <div id="infra-card-2" onclick="selectInfra(2)" class="cursor-pointer bg-stone-900 text-white p-8 rounded-2xl shadow-xl flex flex-col border-2 border-stone-800 transition-all duration-300 hover:border-orange-500 hover:shadow-orange-900/20 relative overflow-hidden group">
+                        <!-- Accent Glow -->
+                        <div class="absolute top-0 right-0 w-48 h-48 bg-orange-500/10 rounded-full -mr-24 -mt-24 blur-3xl pointer-events-none"></div>
+                        
+                        <div class="mb-4 flex justify-between items-start relative z-10">
+                            <div class="flex items-start gap-3">
+                                <!-- Radio Indicator -->
+                                <div id="infra-radio-2" class="mt-1 w-5 h-5 rounded-full border-2 border-stone-600 flex items-center justify-center flex-shrink-0 transition-colors">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-transparent transition-colors"></div>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white group-hover:text-orange-400 transition-colors">Managed Hosting</h4>
+                                    <p class="text-xs text-stone-400 mt-1">Full-service hosting & automatic-failover.</p>
+                                </div>
+                            </div>
+                            <span class="bg-orange-500 text-stone-900 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider flex-shrink-0">Recommended</span>
+                        </div>
+                        
+                        <p class="text-sm text-stone-300 mb-6 relative z-10 leading-relaxed pl-8">Multi-Cloud redundancy and failover. Primary-provisioned on GCP with auto-failover to AWS/Azure for provider and region-specific outages.</p>
+                        
+                        <div class="pt-6 border-t border-stone-800 mt-auto relative z-10 pl-8">
+                            <p class="text-[10px] text-stone-500 uppercase tracking-widest font-bold mb-1">Monthly Cost</p>
+                            <div class="flex items-baseline gap-1">
+                                <p class="text-3xl font-bold text-orange-500">$250</p>
+                                <p class="text-xs text-stone-400 font-medium">/mo (price-lock) + Usage</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part 2: Implementation Packages -->
+        <section class="space-y-8">
+            <div class="max-w-2xl mx-auto space-y-2 text-center">
+                <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Part 2 of 2</span>
+                <h4 class="text-3xl font-bold text-stone-900">Implementation Packages</h4>
+                <p class="text-stone-600">Choose the level of execution and ongoing engineering support your team needs.</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-6 lg:gap-0 max-w-6xl mx-auto">
+                
+                <!-- Turnkey Package (Main Service) -->
+                <div class="bg-stone-900 text-white p-10 rounded-3xl shadow-xl flex flex-col relative overflow-hidden border border-stone-800 flex-1 w-full lg:w-auto">
+                    <div class="mb-6 relative z-10 flex justify-between items-start">
+                        <div>
+                            <h4 class="text-2xl font-bold text-white">Turnkey Deployment</h4>
+                            <p class="text-sm text-stone-400 mt-2">Design. Develop. Deploy.</p>
+                        </div>
+                        <span class="bg-stone-800 text-stone-300 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest flex-shrink-0 border border-stone-700">Main Service</span>
+                    </div>
+                    
+                    <div class="mb-8 pb-8 border-b border-stone-800 relative z-10 flex flex-col gap-1">
+                        <div class="flex items-baseline gap-2 mb-1">
+                            <span class="text-4xl font-bold text-white">$8,000</span>
+                            <span class="text-sm text-stone-400 font-medium">One-Time</span>
+                        </div>
+                        <span class="text-xs text-orange-400 font-bold uppercase tracking-wider">20% Due at Signing</span>
+                    </div>
+                    
+                    <ul class="text-sm space-y-5 mb-12 text-stone-300 flex-grow relative z-10">
+                        <li class="flex gap-3">
+                            <svg class="w-5 h-5 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="leading-relaxed"><strong class="text-white">Full-Stack Setup:</strong> End-to-end deployment of SQL infrastructure & MindCloud workflows.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <svg class="w-5 h-5 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="leading-relaxed"><strong class="text-white">Complete Ownership:</strong> Full system access and administrative rights turned over post-launch.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <svg class="w-5 h-5 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="leading-relaxed"><strong class="text-white">Intelligence Suite:</strong> 6 interactive PowerBI dashboards fully modeled and deployed.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <svg class="w-5 h-5 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="leading-relaxed"><strong class="text-white">Technical Handoff:</strong> Comprehensive architecture documentation and schemas provided.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <svg class="w-5 h-5 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="leading-relaxed"><strong class="text-white">Launch Support:</strong> 8 hours of dedicated engineering support included post-deployment.</span>
+                        </li>
+                    </ul>
+
+                    <div class="p-4 bg-white/5 rounded-xl border border-white/10 mt-auto relative z-10">
+                        <div class="flex gap-3">
+                            <svg class="w-5 h-5 text-stone-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <p class="text-stone-400 text-xs leading-relaxed">
+                                <em>Note: You'll need a MindCloud License for ongoing task usage, but billing won't start until we are closer to launch day.</em>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plus Sign Divider -->
+                <div class="flex-none flex items-center justify-center z-20 lg:-mx-5 my-2 lg:my-0">
+                    <div class="w-12 h-12 rounded-full bg-orange-50 border-4 border-stone-50 text-orange-500 flex items-center justify-center text-2xl font-black shadow-lg relative" title="Bonus Add-On">
+                        +
+                    </div>
+                </div>
+
+                <!-- Fully Managed / Premier Package -->
+                <div class="bg-stone-900 text-white p-10 rounded-3xl shadow-2xl flex flex-col relative overflow-hidden border border-stone-800 transition-all hover:border-orange-500 hover:shadow-orange-900/20 flex-1 w-full lg:w-auto">
+                    <!-- Premium Glow Effect -->
+                    <div class="absolute top-0 right-0 w-72 h-72 bg-orange-500/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+                    
+                    <div class="mb-6 relative z-10 flex justify-between items-start">
+                        <div>
+                            <h4 class="text-2xl font-bold text-white">WatchDogs</h4>
+                            <p class="text-sm text-stone-400 mt-2 pr-4">Active Monitoring & Maintenance</p>
+                        </div>
+                        <span class="bg-orange-500 text-stone-900 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest flex-shrink-0">Add-On</span>
+                    </div>
+                    
+                    <div class="mb-8 pb-8 border-b border-stone-800 relative z-10 flex flex-col gap-1">
+                        <span class="text-4xl font-bold text-orange-400">3 Months Free</span>
+                        <span class="text-sm text-stone-300 font-medium mb-1">Then $500 / Month (if you choose to continue)</span>
+                        <div class="flex items-start gap-1.5 mt-1">
+                            <svg class="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="text-xs text-stone-400">Includes the <strong class="text-orange-400">Managed Hosting</strong> fee from Part 1.</span>
+                        </div>
+                    </div>
+                    
+                    <ul class="text-sm space-y-5 mb-8 text-stone-300 relative z-10 flex-grow">
+                        <li class="flex gap-3">
+                            <svg class="w-5 h-5 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="leading-relaxed"><strong class="text-white">Workflow Monitoring:</strong> Errors handled proactively for you.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <svg class="w-5 h-5 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="leading-relaxed"><strong class="text-white">Workflow Maintenance:</strong> API changes and updates, workflow minor tweaks & performance improvements.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <svg class="w-5 h-5 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="leading-relaxed"><strong class="text-white">Support:</strong> Basic email support for questions and issues (standard response times).</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <svg class="w-5 h-5 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="leading-relaxed"><strong class="text-white">A.I. Hub:</strong> 10M Tokens to experiment with A.I. in the loop in your MindCloud workflows.</span>
+                        </li>
+                        <li class="flex gap-3">
+                            <svg class="w-5 h-5 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span class="leading-relaxed"><strong class="text-white">Affordable Upgrades:</strong> Affordable upgrades & future projects.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-white border-t border-stone-200 mt-auto py-10">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-stone-400 text-xs font-medium uppercase tracking-widest">Fisk Lawnscapes Proposal &bull; Mason Galyon</p>
+        </div>
+    </footer>
+
+    <script>
+        // Form UX Logic for Infrastructure Selection
+        function selectInfra(option) {
+            const card1 = document.getElementById('infra-card-1');
+            const card2 = document.getElementById('infra-card-2');
+            const radio1 = document.getElementById('infra-radio-1');
+            const radio2 = document.getElementById('infra-radio-2');
+
+            // Reset classes
+            card1.classList.remove('border-blue-500', 'ring-4', 'ring-blue-500/20', 'scale-[1.02]', 'shadow-lg', 'opacity-50', 'grayscale');
+            card1.classList.add('border-stone-200');
+            radio1.classList.remove('border-blue-500');
+            radio1.classList.add('border-stone-300');
+            radio1.firstElementChild.classList.remove('bg-blue-500');
+            radio1.firstElementChild.classList.add('bg-transparent');
+
+            card2.classList.remove('border-orange-500', 'ring-4', 'ring-orange-500/20', 'scale-[1.02]', 'shadow-xl', 'opacity-50', 'grayscale');
+            card2.classList.add('border-stone-800');
+            radio2.classList.remove('border-orange-500');
+            radio2.classList.add('border-stone-600');
+            radio2.firstElementChild.classList.remove('bg-orange-500');
+            radio2.firstElementChild.classList.add('bg-transparent');
+
+            // Apply Selected & Dimmed states
+            if(option === 1) {
+                // Dim Card 2
+                card2.classList.add('opacity-50', 'grayscale');
+                
+                // Highlight Card 1
+                card1.classList.remove('border-stone-200');
+                card1.classList.add('border-blue-500', 'ring-4', 'ring-blue-500/20', 'scale-[1.02]', 'shadow-lg');
+                radio1.classList.remove('border-stone-300');
+                radio1.classList.add('border-blue-500');
+                radio1.firstElementChild.classList.remove('bg-transparent');
+                radio1.firstElementChild.classList.add('bg-blue-500');
+            } else if(option === 2) {
+                // Dim Card 1
+                card1.classList.add('opacity-50', 'grayscale');
+                
+                // Highlight Card 2
+                card2.classList.remove('border-stone-800');
+                card2.classList.add('border-orange-500', 'ring-4', 'ring-orange-500/20', 'scale-[1.02]', 'shadow-xl');
+                radio2.classList.remove('border-stone-600');
+                radio2.classList.add('border-orange-500');
+                radio2.firstElementChild.classList.remove('bg-transparent');
+                radio2.firstElementChild.classList.add('bg-orange-500');
+            }
+        }
+    </script>
+</body>
+</html>
