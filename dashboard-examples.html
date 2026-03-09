@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fisk Lawnscapes | Dashboard Prototypes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f5f5f4; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
+        
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dashboard-tab.active {
+            background-color: #fafaf9;
+            border-left-color: #f97316; /* orange-500 */
+            color: #1c1917; /* stone-900 */
+            font-weight: 700;
+        }
+
+        /* Matrix Table Styling for Scorecards */
+        .matrix-cell { padding: 0.75rem 0.5rem; text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; font-size: 0.875rem; }
+        .cell-good { background-color: #dcfce7; color: #166534; } /* Green */
+        .cell-warn { background-color: #fef08a; color: #854d0e; } /* Yellow */
+        .cell-bad { background-color: #fee2e2; color: #991b1b; } /* Red */
+        .cell-neutral { background-color: #f5f5f4; color: #57534e; }
+        
+        .chart-container { position: relative; width: 100%; height: 300px; }
+        
+        /* Filter Select Customization */
+        select { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 0.5rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; padding-right: 2.5rem; -webkit-print-color-adjust: exact; color-adjust: exact; }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 font-sans antialiased min-h-screen flex flex-col selection:bg-orange-100">
+
+    <!-- Top Navigation bar -->
+    <header class="w-full bg-white border-b border-stone-200 shrink-0 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="flex items-center justify-center w-8 h-8 rounded hover:bg-stone-100 text-stone-400 hover:text-stone-900 transition-colors" title="Back to Portal">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                </a>
+                <a href="index.html">
+                    <div class="h-10 w-10 bg-stone-900 rounded flex items-center justify-center text-white font-bold text-xl shadow-md">FL</div>
+                </a>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-stone-900">Dashboard Prototypes</h1>
+                    <p class="text-xs text-stone-500 uppercase tracking-wider">Phase 4 Deliverable Preview</p>
+                </div>
+            </div>
+            <div class="text-right hidden sm:block">
+                <p class="text-xs text-stone-500">Prepared for Jacob Stankich</p>
+                <p class="text-[10px] text-orange-600 font-bold uppercase tracking-widest mt-0.5">Consultant: Mason D.G.</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex flex-col fade-in">
+        
+        <!-- Context Banner -->
+        <div class="bg-stone-900 rounded-xl p-6 md:p-8 shadow-lg relative overflow-hidden mb-8 border border-stone-800 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 rounded-full -mr-20 -mt-20 blur-3xl pointer-events-none"></div>
+            <div class="relative z-10 max-w-3xl">
+                <h2 class="text-2xl font-bold text-white mb-2">Interactive Reporting Mocks</h2>
+                <p class="text-sm text-stone-400 leading-relaxed">
+                    These are low-fidelity structural prototypes. The goal is to ensure the layout, metrics, and filtering capabilities match your operational needs before we begin database modeling. <strong class="text-orange-400">All data shown is randomized mock data.</strong>
+                </p>
+            </div>
+            <div class="relative z-10 shrink-0 bg-stone-800/80 backdrop-blur border border-stone-700 p-4 rounded-xl">
+                <p class="text-[10px] text-stone-400 uppercase tracking-widest font-bold mb-2">Global Filters Preview</p>
+                <div class="flex gap-2">
+                    <select id="filter-division" onchange="updateFilters()" class="text-xs bg-stone-900 border border-stone-700 text-white rounded p-1.5 focus:outline-none focus:border-orange-500 transition-colors cursor-pointer">
+                        <option>All Divisions</option>
+                        <option>Maintenance</option>
+                        <option>Install</option>
+                        <option>Snow</option>
+                    </select>
+                    <select id="filter-company" onchange="updateFilters()" class="text-xs bg-stone-900 border border-stone-700 text-white rounded p-1.5 focus:outline-none focus:border-orange-500 transition-colors cursor-pointer">
+                        <option>All Companies</option>
+                        <option>Fisk Lawnscapes</option>
+                        <option>Secondary Entity</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Application Layout -->
+        <div class="flex-1 flex flex-col md:flex-row gap-8 min-h-[600px] mb-12">
+            
+            <!-- Sidebar Navigation -->
+            <aside class="w-full md:w-64 shrink-0 flex flex-col space-y-2">
+                <button onclick="switchTab('operational')" class="dashboard-tab active w-full text-left px-5 py-3.5 rounded-xl text-sm text-stone-600 hover:bg-stone-100 hover:text-stone-900 border-l-4 border-transparent focus:outline-none transition-all shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <span>Operational Efficiency</span>
+                        <span class="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-bold">Aspire</span>
+                    </div>
+                </button>
+                <button onclick="switchTab('financial')" class="dashboard-tab w-full text-left px-5 py-3.5 rounded-xl text-sm text-stone-600 hover:bg-stone-100 hover:text-stone-900 border-l-4 border-transparent focus:outline-none transition-all">
+                    <div class="flex items-center justify-between">
+                        <span>Financial Health</span>
+                        <span class="text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-bold">QB+Aspire</span>
+                    </div>
+                </button>
+                <button onclick="switchTab('project')" class="dashboard-tab w-full text-left px-5 py-3.5 rounded-xl text-sm text-stone-600 hover:bg-stone-100 hover:text-stone-900 border-l-4 border-transparent focus:outline-none transition-all">
+                    <div class="flex items-center justify-between">
+                        <span>Project Management</span>
+                        <span class="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-bold">Aspire</span>
+                    </div>
+                </button>
+                <button onclick="switchTab('leads')" class="dashboard-tab w-full text-left px-5 py-3.5 rounded-xl text-sm text-stone-600 hover:bg-stone-100 hover:text-stone-900 border-l-4 border-transparent focus:outline-none transition-all">
+                    <div class="flex items-center justify-between">
+                        <span>Sales & Leads</span>
+                        <span class="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-bold">Aspire</span>
+                    </div>
+                </button>
+            </aside>
+
+            <!-- Main Dashboard Area -->
+            <section id="main-dashboard-area" class="flex-1 bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden relative transition-opacity duration-300">
+                
+                <!-- 1. Operational Efficiency View -->
+                <div id="view-operational" class="p-6 h-full flex flex-col fade-in block">
+                    <!-- Dashboard Sub-Header -->
+                    <div class="flex items-end justify-between mb-6 pb-4 border-b border-stone-100">
+                        <div>
+                            <div class="flex items-center gap-3 mb-1">
+                                <h3 class="text-xl font-bold text-stone-900">Crew Scorecard</h3>
+                                <span class="bg-stone-100 text-stone-600 text-[10px] font-bold px-2 py-0.5 rounded border border-stone-200 uppercase tracking-widest">Labor Efficiency</span>
+                            </div>
+                            <p id="operational-desc" class="text-xs text-stone-500">Viewing: Labor Efficiency (Estimated Hrs ÷ Actual Hrs) grouped by Crew Leader.</p>
+                        </div>
+                        <div class="flex gap-2 text-xs">
+                            <button class="px-3 py-1.5 bg-stone-100 text-stone-700 rounded-md font-medium hover:bg-stone-200 transition-colors">Crew Scorecard</button>
+                            <button class="px-3 py-1.5 bg-white border border-stone-200 text-stone-500 rounded-md font-medium hover:bg-stone-50 transition-colors">Labor Utilization</button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row gap-6 h-full">
+                        <!-- Inner Sidebar: Metrics -->
+                        <div class="w-full md:w-48 shrink-0 flex flex-col">
+                            <h4 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3 border-b border-stone-100 pb-2">Metric</h4>
+                            <div class="space-y-2">
+                                <button onclick="setMetric('efficiency')" id="btn-metric-efficiency" class="w-full text-left p-3 rounded-lg border border-transparent transition-all active-metric bg-green-600 text-white shadow-md">
+                                    <div class="font-bold text-sm">Labor Efficiency</div>
+                                    <div class="text-[10px] mt-0.5 opacity-80">Estimated hrs ÷ actual hrs</div>
+                                </button>
+                                <button onclick="setMetric('variance')" id="btn-metric-variance" class="w-full text-left p-3 rounded-lg border border-stone-100 text-stone-600 hover:bg-stone-50 transition-all">
+                                    <div class="font-bold text-sm">Labor Variance</div>
+                                    <div class="text-[10px] mt-0.5 opacity-80">Actual hours - estimated hours</div>
+                                </button>
+                                <button onclick="setMetric('ot')" id="btn-metric-ot" class="w-full text-left p-3 rounded-lg border border-stone-100 text-stone-600 hover:bg-stone-50 transition-all">
+                                    <div class="font-bold text-sm">OT Hours %</div>
+                                    <div class="text-[10px] mt-0.5 opacity-80">Overtime hours ÷ total hours</div>
+                                </button>
+                                <button onclick="setMetric('drive')" id="btn-metric-drive" class="w-full text-left p-3 rounded-lg border border-stone-100 text-stone-600 hover:bg-stone-50 transition-all">
+                                    <div class="font-bold text-sm">Drive Time %</div>
+                                    <div class="text-[10px] mt-0.5 opacity-80">Drive time hours ÷ total hours</div>
+                                </button>
+                            </div>
+
+                            <h4 class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mt-6 mb-3 border-b border-stone-100 pb-2">View By</h4>
+                            <div class="space-y-2">
+                                <button class="w-full text-left p-2.5 rounded-lg bg-green-600 text-white shadow-sm font-bold text-sm">Crew Leader</button>
+                                <button class="w-full text-left p-2.5 rounded-lg border border-stone-100 text-stone-600 hover:bg-stone-50 font-bold text-sm transition-all">Route Manager</button>
+                                <button class="w-full text-left p-2.5 rounded-lg border border-stone-100 text-stone-600 hover:bg-stone-50 font-bold text-sm transition-all">Branch</button>
+                            </div>
+                        </div>
+
+                        <!-- KPI Cards & Matrix -->
+                        <div class="flex-1 flex flex-col">
+                            <!-- Dynamic KPI Cards -->
+                            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6" id="kpi-container">
+                                <!-- Populated by JS -->
+                            </div>
+
+                            <!-- Matrix Component -->
+                            <div class="flex-1 bg-white border border-stone-200 rounded-xl overflow-hidden flex flex-col">
+                                <div class="bg-stone-50 px-4 py-3 border-b border-stone-200 flex justify-between items-center">
+                                    <span class="text-sm font-bold text-stone-700">Weekly Matrix</span>
+                                    <div class="flex gap-2">
+                                        <button class="text-[10px] px-2 py-1 bg-white border border-stone-200 rounded font-medium text-stone-500 flex items-center gap-1 hover:bg-stone-50"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Daily</button>
+                                        <button class="text-[10px] px-2 py-1 bg-green-600 text-white rounded font-medium border border-green-700 shadow-sm flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Weekly</button>
+                                    </div>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left text-sm whitespace-nowrap">
+                                        <thead class="bg-stone-50/50 text-stone-500 border-b border-stone-200">
+                                            <tr>
+                                                <th class="p-3 font-semibold uppercase text-[10px] tracking-wider w-48">Crew Leader</th>
+                                                <th class="p-3 font-semibold uppercase text-[10px] tracking-wider text-center border-l border-stone-100">Total ↓</th>
+                                                <th class="p-3 font-semibold uppercase text-[10px] tracking-wider text-center border-l border-stone-100">11/23 - 11/29</th>
+                                                <th class="p-3 font-semibold uppercase text-[10px] tracking-wider text-center border-l border-stone-100">11/30 - 12/6</th>
+                                                <th class="p-3 font-semibold uppercase text-[10px] tracking-wider text-center border-l border-stone-100">12/7 - 12/13</th>
+                                                <th class="p-3 font-semibold uppercase text-[10px] tracking-wider text-center border-l border-stone-100">12/14 - 12/20</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="matrix-tbody" class="divide-y divide-stone-100">
+                                            <!-- Populated by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Financial Health View -->
+                <div id="view-financial" class="p-6 h-full flex flex-col fade-in hidden">
+                    <div class="flex items-end justify-between mb-6 pb-4 border-b border-stone-100">
+                        <div>
+                            <div class="flex items-center gap-3 mb-1">
+                                <h3 class="text-xl font-bold text-stone-900">Executive Financial Overview</h3>
+                                <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded border border-blue-200 uppercase tracking-widest">QB + Aspire</span>
+                            </div>
+                            <p class="text-xs text-stone-500">P&L vs Budget, Cash Flow mapping, and Historical margins.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        <!-- Chart 1: P&L vs Budget -->
+                        <div class="bg-stone-50 border border-stone-200 rounded-xl p-5">
+                            <h4 class="text-sm font-bold text-stone-900 mb-1">Revenue: Actual vs Budget</h4>
+                            <p class="text-[10px] text-stone-500 mb-4 uppercase tracking-wider">Source: Aspire Invoiced vs QB Accrual</p>
+                            <div class="chart-container"><canvas id="chart-pl"></canvas></div>
+                        </div>
+
+                        <!-- Chart 2: Historical Net Operating Profit -->
+                        <div class="bg-stone-50 border border-stone-200 rounded-xl p-5">
+                            <h4 class="text-sm font-bold text-stone-900 mb-1">Net Operating Profit (5-Year Hist.)</h4>
+                            <p class="text-[10px] text-stone-500 mb-4 uppercase tracking-wider">Source: QuickBooks Cash Flow</p>
+                            <div class="chart-container"><canvas id="chart-cashflow"></canvas></div>
+                        </div>
+                    </div>
+
+                    <!-- Gross Profit Margin Table -->
+                    <div class="bg-white border border-stone-200 rounded-xl overflow-hidden flex-1">
+                        <div class="bg-stone-50 px-4 py-3 border-b border-stone-200">
+                            <span class="text-sm font-bold text-stone-700">Gross Profit Margins by Division</span>
+                        </div>
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-stone-50 text-stone-500 border-b border-stone-100">
+                                <tr>
+                                    <th class="p-3 font-semibold text-xs">Division</th>
+                                    <th class="p-3 font-semibold text-xs text-right">Revenue (YTD)</th>
+                                    <th class="p-3 font-semibold text-xs text-right">COGS (YTD)</th>
+                                    <th class="p-3 font-semibold text-xs text-right">Margin %</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-stone-100">
+                                <tr>
+                                    <td class="p-3 font-medium text-stone-900">Maintenance</td>
+                                    <td class="p-3 text-right font-mono">$1,245,000</td>
+                                    <td class="p-3 text-right font-mono text-stone-500">$710,000</td>
+                                    <td class="p-3 text-right font-mono font-bold text-green-600">43.0%</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium text-stone-900">Enhancements / Install</td>
+                                    <td class="p-3 text-right font-mono">$850,000</td>
+                                    <td class="p-3 text-right font-mono text-stone-500">$510,000</td>
+                                    <td class="p-3 text-right font-mono font-bold text-green-600">40.0%</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-medium text-stone-900">Snow Removal</td>
+                                    <td class="p-3 text-right font-mono">$320,000</td>
+                                    <td class="p-3 text-right font-mono text-stone-500">$180,000</td>
+                                    <td class="p-3 text-right font-mono font-bold text-green-600">43.8%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 3. Project Management View -->
+                <div id="view-project" class="p-6 h-full flex flex-col fade-in hidden">
+                    <div class="flex items-end justify-between mb-6 pb-4 border-b border-stone-100">
+                        <div>
+                            <div class="flex items-center gap-3 mb-1">
+                                <h3 class="text-xl font-bold text-stone-900">Project Management</h3>
+                                <span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded border border-green-200 uppercase tracking-widest">Aspire</span>
+                            </div>
+                            <p class="text-xs text-stone-500">Install job costing, profitability, and weekly progress tracking.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-stone-50 border border-stone-200 rounded-xl p-5">
+                            <h4 class="text-sm font-bold text-stone-900 mb-1">Install Job Profitability (Top 5 Active)</h4>
+                            <p class="text-[10px] text-stone-500 mb-4 uppercase tracking-wider">Estimated vs Actual Cost</p>
+                            <div class="chart-container"><canvas id="chart-jobcost"></canvas></div>
+                        </div>
+
+                        <div class="bg-stone-50 border border-stone-200 rounded-xl p-5 flex flex-col">
+                            <h4 class="text-sm font-bold text-stone-900 mb-1">Weekly Progress Status</h4>
+                            <p class="text-[10px] text-stone-500 mb-4 uppercase tracking-wider">Completion percentage by major site</p>
+                            
+                            <!-- Mock Progress Bars -->
+                            <div class="space-y-5 flex-1 mt-2">
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="font-bold text-stone-700">Northside HOA - Phase 2</span>
+                                        <span class="font-mono font-bold text-stone-900">85%</span>
+                                    </div>
+                                    <div class="w-full bg-stone-200 rounded-full h-2.5">
+                                        <div class="bg-blue-600 h-2.5 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="font-bold text-stone-700">Corporate Park Alpha Install</span>
+                                        <span class="font-mono font-bold text-stone-900">42%</span>
+                                    </div>
+                                    <div class="w-full bg-stone-200 rounded-full h-2.5">
+                                        <div class="bg-orange-500 h-2.5 rounded-full" style="width: 42%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="font-bold text-stone-700">City Center Streetscapes</span>
+                                        <span class="font-mono font-bold text-stone-900">12%</span>
+                                    </div>
+                                    <div class="w-full bg-stone-200 rounded-full h-2.5">
+                                        <div class="bg-stone-400 h-2.5 rounded-full" style="width: 12%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="font-bold text-stone-700">Valley High School Fields</span>
+                                        <span class="font-mono font-bold text-stone-900">98%</span>
+                                    </div>
+                                    <div class="w-full bg-stone-200 rounded-full h-2.5">
+                                        <div class="bg-green-500 h-2.5 rounded-full" style="width: 98%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Leads View -->
+                <div id="view-leads" class="p-6 h-full flex flex-col fade-in hidden">
+                    <div class="flex items-end justify-between mb-6 pb-4 border-b border-stone-100">
+                        <div>
+                            <div class="flex items-center gap-3 mb-1">
+                                <h3 class="text-xl font-bold text-stone-900">Sales & Pipeline Pipeline</h3>
+                                <span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded border border-green-200 uppercase tracking-widest">Aspire</span>
+                            </div>
+                            <p class="text-xs text-stone-500">Tracking lead volume and lead origination sources.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="md:col-span-2 bg-stone-50 border border-stone-200 rounded-xl p-5">
+                            <h4 class="text-sm font-bold text-stone-900 mb-1">New Leads per Month</h4>
+                            <p class="text-[10px] text-stone-500 mb-4 uppercase tracking-wider">Trailing 12 Months</p>
+                            <div class="chart-container"><canvas id="chart-leads-bar"></canvas></div>
+                        </div>
+
+                        <div class="bg-stone-50 border border-stone-200 rounded-xl p-5 flex flex-col">
+                            <h4 class="text-sm font-bold text-stone-900 mb-1">Lead Sources</h4>
+                            <p class="text-[10px] text-stone-500 mb-4 uppercase tracking-wider">Current YTD</p>
+                            <div class="chart-container flex-1"><canvas id="chart-leads-doughnut"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-stone-200 mt-auto py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-stone-400 text-[10px] font-bold uppercase tracking-widest">Fisk Lawnscapes Intelligence &bull; Dashboard Prototypes</p>
+        </div>
+    </footer>
+
+    <script>
+        // Global State & Chart References
+        const state = {
+            metric: 'efficiency', // 'efficiency', 'variance', 'ot', 'drive'
+            globalModifier: 1.0 // Used to scramble data when filters change
+        };
+        const charts = {};
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.dashboard-tab').forEach(btn => {
+                btn.classList.remove('active', 'bg-stone-50', 'border-orange-500', 'font-bold', 'text-stone-900');
+                btn.style.borderLeftColor = 'transparent';
+            });
+            event.currentTarget.classList.add('active');
+
+            ['operational', 'financial', 'project', 'leads'].forEach(id => {
+                document.getElementById(`view-${id}`).classList.add('hidden');
+            });
+
+            const activeView = document.getElementById(`view-${tabId}`);
+            activeView.classList.remove('hidden');
+            activeView.classList.remove('fade-in');
+            void activeView.offsetWidth; 
+            activeView.classList.add('fade-in');
+        }
+
+        // Global Filter Simulation
+        function updateFilters() {
+            // Add a brief visual fade to simulate loading
+            const container = document.getElementById('main-dashboard-area');
+            container.style.opacity = '0.5';
+            
+            // Generate a random modifier between 0.7 and 1.3 to shift the data
+            state.globalModifier = 0.7 + (Math.random() * 0.6);
+
+            setTimeout(() => {
+                // Scramble Chart.js Data
+                if(charts.pl) scrambleChart(charts.pl);
+                if(charts.cf) scrambleChart(charts.cf);
+                if(charts.jc) scrambleChart(charts.jc);
+                if(charts.lb) scrambleChart(charts.lb);
+                if(charts.ld) scrambleChart(charts.ld);
+
+                // Re-render the operational matrix with new modifier
+                renderOperationalData();
+                
+                container.style.opacity = '1';
+            }, 400);
+        }
+
+        function scrambleChart(chartInstance) {
+            chartInstance.data.datasets.forEach(dataset => {
+                dataset.data = dataset.data.map(val => val * (0.8 + Math.random() * 0.4));
+            });
+            chartInstance.update();
+        }
+
+        // --- Operational Matrix Logic ---
+        const crewLeaders = ['Pe************', 'Al************', 'Ed************', 'Ra************', 'Ju************', 'Si************', 'Hu************'];
+
+        function setMetric(metricId) {
+            state.metric = metricId;
+            
+            // Update UI Active States
+            document.querySelectorAll('[id^="btn-metric-"]').forEach(btn => {
+                btn.className = 'w-full text-left p-3 rounded-lg border border-stone-100 text-stone-600 hover:bg-stone-50 transition-all';
+                btn.querySelector('div.text-sm').classList.remove('text-white');
+                btn.querySelector('div.text-\\[10px\\]').classList.remove('text-green-100');
+            });
+            
+            const activeBtn = document.getElementById(`btn-metric-${metricId}`);
+            activeBtn.className = 'w-full text-left p-3 rounded-lg border border-transparent transition-all active-metric bg-green-600 text-white shadow-md';
+            
+            renderOperationalData();
+        }
+
+        function getMetricConfig() {
+            switch(state.metric) {
+                case 'efficiency': 
+                    return { 
+                        name: 'Labor Efficiency', desc: 'Viewing: Estimated Hrs ÷ Actual Hrs',
+                        kpis: [{l: 'Actual Hours', v: 8653.9, f: 'n'}, {l: 'Est. Hours', v: 8889.5, f: 'n'}, {l: 'Variance', v: '97%', f: 's'}, {l: 'Total Efficiency', v: '103%', f: 'g'}],
+                        base: 100, range: 40, suffix: '%', isGoodHigh: true
+                    };
+                case 'variance': 
+                    return { 
+                        name: 'Labor Variance', desc: 'Viewing: Actual Hours - Estimated Hours',
+                        kpis: [{l: 'Total Actual', v: 8653.9, f: 'n'}, {l: 'Total Est.', v: 8889.5, f: 'n'}, {l: 'Target Variance', v: 0, f: 'n'}, {l: 'Actual Variance', v: -235.6, f: 'g'}],
+                        base: 0, range: 40, suffix: 'h', isGoodHigh: false // Lower/negative variance is usually better (under budget)
+                    };
+                case 'ot': 
+                    return { 
+                        name: 'OT Hours %', desc: 'Viewing: Overtime Hours ÷ Total Hours',
+                        kpis: [{l: 'Total Hours', v: 8653.9, f: 'n'}, {l: 'Regular Hrs', v: 7900.2, f: 'n'}, {l: 'OT Target', v: '< 5%', f: 's'}, {l: 'Current OT', v: '8.7%', f: 'w'}],
+                        base: 8, range: 15, suffix: '%', isGoodHigh: false
+                    };
+                case 'drive': 
+                    return { 
+                        name: 'Drive Time %', desc: 'Viewing: Drive Time Hours ÷ Total Hours',
+                        kpis: [{l: 'Total Hours', v: 8653.9, f: 'n'}, {l: 'On-Site Hrs', v: 7100.5, f: 'n'}, {l: 'Drive Target', v: '< 15%', f: 's'}, {l: 'Current Drive', v: '17.9%', f: 'w'}],
+                        base: 18, range: 10, suffix: '%', isGoodHigh: false
+                    };
+            }
+        }
+
+        function renderOperationalData() {
+            const config = getMetricConfig();
+            document.getElementById('operational-desc').innerHTML = config.desc;
+
+            // 1. Render KPIs
+            const kpiHtml = config.kpis.map(k => {
+                let colorClass = 'text-stone-900';
+                if (k.f === 'g') colorClass = 'text-green-600';
+                if (k.f === 'w') colorClass = 'text-amber-600';
+                if (k.f === 'r') colorClass = 'text-red-600';
+                
+                // apply global modifier to numbers to simulate filter changes
+                let displayVal = k.v;
+                if (typeof k.v === 'number') {
+                    displayVal = (k.v * state.globalModifier).toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1});
+                }
+
+                return `
+                <div class="bg-stone-50 p-4 rounded-xl border border-stone-100 flex flex-col justify-center transition-all">
+                    <span class="text-[10px] font-bold text-stone-500 uppercase tracking-wider mb-1">${k.l}</span>
+                    <span class="text-2xl font-bold ${colorClass} font-mono">${displayVal}</span>
+                </div>`;
+            }).join('');
+            document.getElementById('kpi-container').innerHTML = kpiHtml;
+
+            // 2. Render Matrix Body
+            let tbodyHtml = '';
+            
+            // Calculate Total Row
+            let totalVals = [];
+            for(let w=0; w<5; w++) {
+                let v = config.base + (Math.random() * config.range - (config.range/2));
+                v = v * state.globalModifier;
+                totalVals.push(v);
+            }
+
+            tbodyHtml += `<tr class="bg-stone-100/50">
+                <td class="p-3 font-bold text-stone-900 border-r border-stone-100">Total</td>
+                ${totalVals.map((val, i) => getCellHtml(val, config, i===0)).join('')}
+            </tr>`;
+
+            // Crew Rows
+            crewLeaders.forEach(crew => {
+                tbodyHtml += `<tr>
+                    <td class="p-3 font-mono text-xs text-stone-600 border-r border-stone-100">${crew}</td>`;
+                
+                // 5 columns (Total + 4 weeks)
+                for(let w=0; w<5; w++) {
+                    // Randomly decide if they have data for this week (simulate blanks)
+                    if (w > 0 && Math.random() > 0.8) {
+                        tbodyHtml += `<td class="matrix-cell text-stone-300 border-l border-stone-100">-</td>`;
+                    } else {
+                        let v = config.base + (Math.random() * config.range * 1.5 - (config.range * 0.75));
+                        v = v * state.globalModifier;
+                        tbodyHtml += getCellHtml(v, config, false);
+                    }
+                }
+                tbodyHtml += `</tr>`;
+            });
+
+            document.getElementById('matrix-tbody').innerHTML = tbodyHtml;
+        }
+
+        function getCellHtml(val, config, isTotalCol) {
+            let colorClass = 'cell-neutral';
+            
+            if (config.isGoodHigh) {
+                if (val >= config.base * 1.05) colorClass = 'cell-good';
+                else if (val <= config.base * 0.9) colorClass = 'cell-bad';
+                else colorClass = 'cell-warn';
+            } else {
+                // Lower is better (e.g. OT, Drive Time)
+                if (val <= config.base * 0.9) colorClass = 'cell-good';
+                else if (val >= config.base * 1.1) colorClass = 'cell-bad';
+                else colorClass = 'cell-warn';
+            }
+
+            const formattedVal = val.toFixed(0) + config.suffix;
+            return `<td class="matrix-cell ${colorClass} border-l border-white/50 border-t border-white/50 ${isTotalCol ? 'font-bold' : ''}">${formattedVal}</td>`;
+        }
+
+
+        // --- Chart.js Initialization ---
+        Chart.defaults.font.family = "'Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'";
+        Chart.defaults.color = '#78716c';
+        Chart.defaults.plugins.tooltip.backgroundColor = '#1c1917';
+        Chart.defaults.plugins.tooltip.padding = 10;
+        Chart.defaults.plugins.tooltip.cornerRadius = 8;
+
+        window.onload = function() {
+            initFinancialCharts();
+            initProjectCharts();
+            initLeadCharts();
+            renderOperationalData(); // Initialize matrix
+        };
+
+        function initFinancialCharts() {
+            const ctxPL = document.getElementById('chart-pl').getContext('2d');
+            charts.pl = new Chart(ctxPL, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [
+                        { label: 'Actual Revenue', data: [120, 135, 180, 240, 280, 310, 305], backgroundColor: '#0ea5e9', borderRadius: 4 },
+                        { label: 'Budgeted Revenue', data: [115, 140, 175, 230, 260, 290, 315], backgroundColor: '#e7e5e4', borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, usePointStyle: true } } },
+                    scales: { 
+                        y: { beginAtZero: true, grid: { color: '#f5f5f4' }, border: { display: false } },
+                        x: { grid: { display: false }, border: { display: false } }
+                    }
+                }
+            });
+
+            const ctxCF = document.getElementById('chart-cashflow').getContext('2d');
+            charts.cf = new Chart(ctxCF, {
+                type: 'line',
+                data: {
+                    labels: ['2020', '2021', '2022', '2023', '2024', '2025(YTD)'],
+                    datasets: [{
+                        label: 'Net Operating Profit',
+                        data: [180000, 210000, 195000, 280000, 340000, 160000],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 3, tension: 0.4, fill: true,
+                        pointBackgroundColor: '#ffffff', pointBorderColor: '#10b981', pointBorderWidth: 2, pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#f5f5f4' }, border: { display: false }, ticks: { callback: function(val) { return '$' + val/1000 + 'k'; } } },
+                        x: { grid: { display: false }, border: { display: false } }
+                    }
+                }
+            });
+        }
+
+        function initProjectCharts() {
+            const ctxJC = document.getElementById('chart-jobcost').getContext('2d');
+            charts.jc = new Chart(ctxJC, {
+                type: 'bar',
+                data: {
+                    labels: ['Northside', 'Corp Park', 'Valley HS', 'City Center', 'Oaks Subdiv'],
+                    datasets: [
+                        { label: 'Estimated Cost', data: [45000, 85000, 32000, 120000, 28000], backgroundColor: '#d6d3d1' },
+                        { label: 'Actual Cost To-Date', data: [38000, 89000, 31500, 65000, 12000], backgroundColor: '#f97316' }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, usePointStyle: true } } },
+                    scales: {
+                        x: { beginAtZero: true, grid: { color: '#f5f5f4' }, border: { display: false }, ticks: { callback: function(val) { return '$' + val/1000 + 'k'; } } },
+                        y: { grid: { display: false }, border: { display: false } }
+                    }
+                }
+            });
+        }
+
+        function initLeadCharts() {
+            const ctxLB = document.getElementById('chart-leads-bar').getContext('2d');
+            charts.lb = new Chart(ctxLB, {
+                type: 'bar',
+                data: {
+                    labels: ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+                    datasets: [{
+                        label: 'New Leads',
+                        data: [15, 12, 8, 5, 22, 45, 68, 85, 92, 60, 42, 35],
+                        backgroundColor: '#8b5cf6', borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#f5f5f4' }, border: { display: false } },
+                        x: { grid: { display: false }, border: { display: false } }
+                    }
+                }
+            });
+
+            const ctxLD = document.getElementById('chart-leads-doughnut').getContext('2d');
+            charts.ld = new Chart(ctxLD, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Website Referral', 'Truck Decal', 'Word of Mouth', 'Facebook Ads', 'Cold Outreach'],
+                    datasets: [{
+                        data: [40, 15, 25, 12, 8],
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#a8a29e'],
+                        borderWidth: 0, hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, usePointStyle: true, font: { size: 10 } } } },
+                    cutout: '65%'
+                }
+            });
+        }
+    </script>
+</body>
+</html>
